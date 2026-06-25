@@ -15,8 +15,8 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
 ```css
 @import "tailwindcss";
 
-@source "../../layouts/**/*.html";
-@source "../../content/**/*.md";
+@source "../layouts/**/*.html";
+@source "../content/**/*.md";
 
 @theme {
   --font-sans: "Lexend", system-ui, sans-serif;
@@ -1396,6 +1396,667 @@ document.addEventListener("alpine:init", function () {
 ```
 ---
 
+## content/about/_index.md
+```md
+---
+title: "Tentang ZEDLABS"
+description: "Studio teknologi yang fokus pada hasil nyata, bukan sekadar deliverable."
+---
+
+ZEDLABS berdiri dari frustrasi yang sederhana: terlalu banyak proyek teknologi yang selesai secara teknis, namun gagal secara bisnis. Kami membangun studio ini dengan satu prinsip utama — teknologi hanya relevan jika berdampak nyata.
+
+Sejak 2020, kami telah membantu puluhan bisnis dari berbagai industri membangun produk digital yang tidak hanya berjalan dengan baik, tetapi juga tumbuh bersama bisnis mereka.
+
+Kami tidak percaya pada solusi generik. Setiap klien mendapatkan pendekatan yang disesuaikan dengan konteks bisnis, skala tim, dan tujuan jangka panjang mereka.
+
+```
+---
+
+## content/blog/arsitektur-go-untuk-startup.md
+```md
+---
+title: "Kenapa Kami Memilih Go untuk Semua Backend Klien"
+description: "Bukan karena hype, bukan karena tren. Ada alasan teknis dan bisnis yang sangat konkret di balik keputusan ini."
+date: 2025-10-22
+category: "Engineering"
+tags: ["Go", "Backend", "Arsitektur", "Performance"]
+featured: false
+---
+
+Setiap kali kami mempresentasikan stack teknologi ke klien baru, pertanyaan yang hampir selalu muncul adalah: kenapa Go, bukan Node.js atau Python?
+
+Jawabannya tidak sesederhana "Go lebih cepat." Konteks bisnis sama pentingnya dengan konteks teknis.
+
+## Konteks: Kami Membangun untuk Bertahan Lama
+
+Sebagian besar klien ZEDLABS adalah bisnis yang ingin produk digitalnya bertahan dan berkembang selama bertahun-tahun — bukan startup yang akan pivot setiap kuartal. Ini mengubah cara kami mengevaluasi teknologi.
+
+Kriteria kami bukan hanya "seberapa cepat kita bisa mulai" tapi juga "seberapa mudah ini di-maintain dua tahun ke depan oleh tim yang mungkin berbeda."
+
+## Alasan Teknis
+
+### Type Safety Tanpa Overhead Runtime
+
+Go adalah statically typed language yang dikompilasi. Dibandingkan Python atau Node.js, kesalahan tipe terdeteksi saat compile time, bukan saat production. Untuk tim kecil tanpa QA engineer dedicated, ini adalah safety net yang sangat berharga.
+
+### Concurrency Model yang Elegan
+
+Goroutines memungkinkan concurrency yang efisien dengan memory footprint yang rendah. Satu server Go bisa menangani puluhan ribu koneksi concurrent dengan RAM yang jauh lebih sedikit dibanding Node.js atau Java.
+
+### Binary Deployment
+
+Go menghasilkan single binary yang bisa langsung dijalankan di target OS tanpa runtime dependency. Tidak ada node_modules, tidak ada virtual environment, tidak ada JVM. Docker image yang dihasilkan bisa sekecil 15MB.
+
+### Standard Library yang Kuat
+
+HTTP server, JSON encoding, cryptography, testing — semuanya ada di standard library Go. Dependency eksternal yang lebih sedikit berarti attack surface yang lebih kecil dan upgrade path yang lebih mudah.
+
+## Alasan Bisnis
+
+### Talent Pool yang Lebih Focused
+
+Developer Go di Indonesia memang lebih sedikit dibanding Node.js, tapi mereka cenderung lebih senior dan lebih serius tentang engineering quality. Untuk klien yang akan merekrut tim internal setelah MVP, ini adalah keuntungan jangka panjang.
+
+### Operational Cost yang Lebih Rendah
+
+Dengan memory usage yang lebih efisien, server yang sama bisa melayani traffic lebih tinggi. Klien kami rata-rata menghemat 40-60% biaya infrastruktur dibanding implementasi Node.js sebelumnya.
+
+## Pengecualian
+
+Kami tidak dogmatis soal Go. Ada situasi di mana kami memilih teknologi lain:
+
+- **Scripting dan data processing**: Python
+- **Frontend yang butuh SSR kompleks**: Next.js
+- **Prototipe cepat dengan tim non-teknis**: Supabase atau PocketBase tanpa custom layer
+
+Go adalah default kami, bukan satu-satunya pilihan.
+
+```
+---
+
+## content/blog/digital-transformation-umkm.md
+```md
+---
+title: "Transformasi Digital UMKM: Pelajaran dari 3 Tahun di Lapangan"
+description: "Kami sudah membantu puluhan UMKM bertransformasi digital. Ini yang benar-benar berhasil, dan ini yang hampir selalu gagal."
+date: 2025-09-15
+category: "Bisnis"
+tags: ["UMKM", "Digital Transformation", "Indonesia", "Case Study"]
+featured: false
+---
+
+Tiga tahun terakhir kami banyak bekerja dengan bisnis skala menengah di Indonesia — dari distributor sembako di Surabaya hingga jaringan klinik kecantikan di Jabodetabek. Polanya mulai terlihat jelas: ada yang berhasil, ada yang tidak, dan perbedaannya jarang soal teknologi.
+
+## Yang Hampir Selalu Gagal
+
+### Digitalisasi Tanpa Perubahan Proses
+
+Bisnis yang mengotomasi proses yang rusak hanya akan menghasilkan kekacauan yang lebih cepat. Kami pernah diminta membangun sistem manajemen stok untuk klien yang ternyata tidak memiliki standar penomoran SKU yang konsisten. Sistem selesai dibangun, tapi tidak pernah digunakan karena data awalnya tidak bisa dimigrasikan.
+
+Pelajaran: audit proses bisnis sebelum audit teknologi.
+
+### Ekspektasi ROI yang Tidak Realistis
+
+"Kami ingin balik modal dalam 3 bulan." Ini adalah tanda bahaya. Transformasi digital adalah investasi jangka menengah — hasilnya biasanya baru terasa signifikan di bulan ke-6 hingga ke-18.
+
+### Ketergantungan Total pada Vendor
+
+Klien yang menyerahkan seluruh sistem kepada vendor tanpa memahami cara kerjanya adalah klien yang rentan. Ketika vendor hilang atau menaikkan harga, mereka tidak punya leverage apapun.
+
+## Yang Berhasil
+
+### Mulai dari Satu Pain Point yang Nyata
+
+Klien terbaik kami selalu datang dengan masalah yang sangat spesifik: "Kami kehilangan 3 jam sehari untuk rekap laporan penjualan secara manual." Dari pain point itu, kami bangun solusi minimal yang langsung terasa dampaknya.
+
+### Libatkan Tim Internal Sejak Awal
+
+Sistem yang dibeli tanpa keterlibatan pengguna akhir hampir pasti akan diabaikan. Klien yang melibatkan staf operasional mereka dalam proses development menghasilkan adoption rate yang jauh lebih tinggi.
+
+### Ukur yang Bisa Diukur
+
+Sebelum mulai, tentukan metrik keberhasilan yang konkret. Bukan "efisiensi meningkat" tapi "waktu pemrosesan order berkurang dari 2 jam menjadi 15 menit." Tanpa baseline yang jelas, tidak ada cara untuk tahu apakah transformasi berhasil.
+
+## Framework yang Kami Gunakan
+
+Untuk setiap klien UMKM baru, kami selalu memulai dengan tiga pertanyaan:
+
+1. Apa satu proses yang paling menyita waktu tim Anda saat ini?
+2. Jika proses itu hilang besok, apa yang akan berubah dalam bisnis Anda?
+3. Siapa di tim Anda yang akan menjadi champion dari sistem baru ini?
+
+Jawaban dari tiga pertanyaan itu menentukan 80% dari roadmap transformasi digital mereka.
+
+```
+---
+
+## content/blog/hugo-vs-next-untuk-company-profile.md
+```md
+---
+title: "Hugo vs Next.js untuk Company Profile: Analisis Jujur"
+description: "Kami sudah membangun company profile dengan keduanya. Berikut perbandingan yang tidak bias — termasuk kapan masing-masing adalah pilihan yang salah."
+date: 2025-08-30
+category: "Tutorial"
+tags: ["Hugo", "Next.js", "Web Development", "JAMstack"]
+featured: false
+---
+
+Pertanyaan ini muncul hampir setiap bulan dari klien yang ingin membangun company profile atau landing page bisnis mereka. Jawabannya bergantung pada beberapa faktor yang sering diabaikan.
+
+## Benchmark yang Kami Lakukan
+
+Kami membangun halaman yang identik — 6 section, blog dengan 50 artikel, contact form — menggunakan keduanya dan mengukur hasilnya di environment production yang sama.
+
+| Metrik | Hugo | Next.js |
+|---|---|---|
+| Build time (50 artikel) | 800ms | 42 detik |
+| Lighthouse Performance | 99 | 91 |
+| Bundle size (JS) | 12KB | 187KB |
+| Time to First Byte | 18ms | 110ms |
+| Cold start (Vercel) | Tidak ada | 800ms-2 detik |
+
+Angka-angka ini bukan hasil rekayasa. Hugo menang telak di semua metrik performa.
+
+## Tapi Performa Bukan Satu-satunya Faktor
+
+### Kapan Next.js Masuk Akal
+
+Next.js layak dipilih jika:
+
+- Tim Anda sudah familiar dengan React dan tidak ingin belajar Go template
+- Company profile Anda butuh komponen interaktif yang kompleks
+- Ada kebutuhan untuk mengambil data real-time dari berbagai API
+- Anda berencana menggabungkan static pages dengan halaman yang butuh server-side rendering dinamis
+
+### Kapan Hugo Adalah Pilihan Tepat
+
+Hugo adalah pilihan yang lebih baik jika:
+
+- Konten dikelola melalui Markdown atau CMS headless
+- Tim konten (bukan developer) yang akan update blog secara rutin
+- Performa dan SEO adalah prioritas utama
+- Deployment harus murah dan sederhana
+
+## Yang Sering Diabaikan: Developer Experience
+
+Hugo menggunakan Go HTML template yang memiliki learning curve lebih curam dibanding JSX. Untuk tim yang mayoritas frontend React, ini adalah hambatan nyata.
+
+Sebaliknya, Next.js datang dengan ekosistem npm yang besar — tapi ini juga berarti `node_modules` yang besar, dependency conflicts, dan breaking changes yang lebih sering.
+
+## Rekomendasi Kami
+
+Untuk company profile dan blog yang tidak membutuhkan interaktivitas tinggi: **Hugo**.
+
+Untuk platform yang akan berkembang menjadi lebih dari sekadar company profile — dengan dashboard, user login, atau fitur SaaS terintegrasi: **Next.js**.
+
+Jangan pilih berdasarkan tren. Pilih berdasarkan kebutuhan nyata tim dan bisnis Anda.
+
+```
+---
+
+## content/blog/membangun-saas-di-atas-pocketbase.md
+```md
+---
+title: "Membangun SaaS MVP di Atas PocketBase dalam 2 Minggu"
+description: "PocketBase bukan sekadar backend alternatif — ia adalah senjata rahasia untuk tim kecil yang ingin bergerak cepat tanpa mengorbankan kualitas arsitektur."
+date: 2025-11-10
+category: "Engineering"
+tags: ["PocketBase", "Go", "SaaS", "Backend"]
+featured: true
+---
+
+Ketika klien datang dengan permintaan MVP dalam dua minggu dan budget terbatas, pilihan stack teknologi bisa menjadi penentu keberhasilan atau kegagalan proyek.
+
+Kami sudah mencoba berbagai kombinasi — Supabase, Firebase, custom REST API dengan Go — tapi untuk skala tertentu, PocketBase memberikan sweet spot yang sulit ditandingi.
+
+## Apa itu PocketBase
+
+PocketBase adalah backend-as-a-service yang berjalan sebagai single binary. Ia menyediakan database SQLite embedded, realtime subscriptions, file storage, autentikasi, dan admin UI — semuanya dalam satu executable berukuran sekitar 30MB.
+
+Untuk tim yang terbiasa mengelola Supabase instance atau Firebase project, ini terdengar terlalu sederhana. Tapi kesederhanaan itulah yang membuat PocketBase sangat powerful untuk use case tertentu.
+
+## Arsitektur yang Kami Gunakan
+
+Untuk proyek SaaS klien kami — platform manajemen inventori untuk jaringan retail kecil-menengah — kami memilih stack berikut:
+
+- **PocketBase** sebagai backend utama (API, auth, database, file storage)
+- **Next.js** untuk frontend aplikasi
+- **Hugo** untuk landing page dan dokumentasi
+- **Cloudflare** untuk CDN dan DNS
+- **Caddy** sebagai reverse proxy
+
+Seluruh infrastruktur berjalan di satu VPS dengan 2 vCPU dan 4GB RAM. Biaya operasional bulanan di bawah Rp 200 ribu.
+
+## Yang Membuat PocketBase Berbeda
+
+### Extend dengan Go
+
+PocketBase bisa di-extend menggunakan Go. Artinya kita bisa menambahkan custom business logic, middleware, atau integrasi pihak ketiga langsung di level backend — bukan di layer tambahan yang terpisah.
+
+```go
+app.OnRecordBeforeCreateRequest("orders").Add(func(e *core.RecordCreateEvent) error {
+    stock := e.Record.GetInt("quantity")
+    if stock <= 0 {
+        return apis.NewBadRequestError("Stok tidak tersedia", nil)
+    }
+    return nil
+})
+```
+
+### Realtime Out of the Box
+
+Setiap collection di PocketBase otomatis memiliki realtime subscription via SSE. Tidak perlu setup WebSocket server terpisah, tidak perlu Redis pub/sub — cukup subscribe dari frontend.
+
+```js
+pb.collection("orders").subscribe("*", function (e) {
+  console.log(e.action, e.record);
+});
+```
+
+### Migrasi Database Terotomasi
+
+PocketBase menyimpan schema changes sebagai migration files yang bisa di-commit ke Git. Ini memastikan konsistensi antara environment development, staging, dan production.
+
+## Hasilnya
+
+MVP selesai dalam 11 hari kerja. Klien langsung bisa onboarding pengguna pertama mereka di hari ke-12. Tiga bulan setelah launch, platform ini melayani 47 outlet dengan lebih dari 200 pengguna aktif — masih di VPS yang sama, tanpa satu pun downtime yang tidak terencana.
+
+## Kapan Tidak Menggunakan PocketBase
+
+PocketBase bukan untuk semua use case. Hindari jika:
+
+- Data Anda melebihi kemampuan SQLite (multi-terabyte, write-heavy concurrent)
+- Tim Anda membutuhkan database relasional yang kompleks dengan banyak joins
+- Regulasi mengharuskan database enterprise tertentu
+
+Untuk kebanyakan MVP dan aplikasi bisnis skala menengah, PocketBase adalah pilihan yang underrated dan underutilized.
+
+```
+---
+
+## content/contact/_index.md
+```md
+---
+title: "Kontak"
+description: "Hubungi ZEDLABS untuk konsultasi, kolaborasi, atau pertanyaan seputar proyek Anda."
+---
+
+```
+---
+
+## content/_index.md
+```md
+---
+title: "ZEDLABS — Innovate Beyond Limits"
+description: "IT Consulting, Web & Mobile Development, dan SaaS solutions untuk bisnis yang ingin tumbuh lebih cepat."
+
+hero:
+  headline: "Kami Bangun"
+  headline_accent: "Sistem yang Tumbuh"
+  subheadline: "Partner teknologi untuk startup dan enterprise Indonesia. Dari arsitektur backend hingga produk yang siap scale — kami kerjakan dengan standar engineering kelas dunia."
+  cta_primary:
+    label: "Mulai Konsultasi"
+    url: "/contact"
+  cta_secondary:
+    label: "Lihat Proyek Kami"
+    url: "/projects"
+
+about:
+  label: "Tentang Kami"
+  title: "Bukan sekadar vendor, tapi partner teknis Anda"
+  body: "ZEDLABS didirikan oleh engineers yang pernah membangun sistem untuk ratusan ribu pengguna. Kami tahu perbedaan antara kode yang selesai dan kode yang bertahan."
+  differentiators:
+    - icon: "⚡"
+      title: "Engineering-first, bukan sales-first"
+      desc: "Setiap keputusan teknis diambil berdasarkan kebutuhan bisnis nyata, bukan untuk menambah billing."
+    - icon: "🔭"
+      title: "Visibilitas penuh sepanjang proyek"
+      desc: "Tidak ada blackbox. Anda tahu apa yang dikerjakan, kapan selesai, dan kenapa keputusan tersebut diambil."
+    - icon: "🏗️"
+      title: "Arsitektur yang bisa tumbuh"
+      desc: "Sistem yang kami bangun dirancang untuk 10x traffic sejak hari pertama, bukan di-refactor setelah chaos."
+
+services:
+  label: "Layanan"
+  title: "Apa yang kami kerjakan"
+  subtitle: "Tiga area keahlian utama, dijalankan dengan standar engineering yang tidak kami kompromikan."
+  items:
+    - icon: "🧠"
+      title: "IT Consulting"
+      desc: "Audit sistem, technology roadmap, dan advisory untuk tim engineering Anda."
+      badge: "Advisory"
+      badge_color: "purple"
+      url: "/services/it-consulting"
+    - icon: "🌐"
+      title: "Web & SaaS Development"
+      desc: "Dari landing page berkecepatan tinggi hingga platform SaaS multi-tenant yang kompleks."
+      badge: "Development"
+      badge_color: "blue"
+      url: "/services/web-development"
+    - icon: "📱"
+      title: "Mobile Development"
+      desc: "Aplikasi Flutter cross-platform dengan performa native dan codebase yang efisien."
+      badge: "Mobile"
+      badge_color: "green"
+      url: "/services/mobile-development"
+
+cta:
+  title: "Siap membangun sesuatu yang bermakna?"
+  subtitle: "Konsultasi pertama gratis. Tidak ada kewajiban, tidak ada sales pitch — hanya diskusi teknis yang jujur."
+  primary:
+    label: "Mulai Konsultasi Gratis"
+    url: "/contact"
+  secondary:
+    label: "Pelajari Layanan Kami"
+    url: "/services"
+---
+
+```
+---
+
+## content/products/zedanalytics.md
+```md
+---
+title: "ZedAnalytics"
+description: "Analytics ringan untuk website dan aplikasi — tanpa cookie banner, tanpa melanggar privasi pengguna, tanpa memberatkan performa halaman Anda."
+category: "Analytics"
+features:
+  - "Script tracking di bawah 2KB — tidak mempengaruhi Lighthouse score"
+  - "Tidak menggunakan cookie — tidak perlu banner consent"
+  - "Dashboard real-time dengan data yang mudah dipahami"
+  - "Funnel analysis dan conversion tracking"
+  - "Custom events untuk tracking interaksi spesifik"
+  - "Heatmap dan session recording"
+  - "Data 100% milik Anda — bisa di-export kapanpun"
+  - "Self-hostable untuk kontrol penuh"
+screenshots: []
+---
+
+ZedAnalytics adalah alternatif privacy-first untuk Google Analytics. Dibangun untuk developer dan bisnis yang peduli pada performa dan privasi pengguna, tanpa harus mengorbankan insights yang berguna.
+
+Berbeda dari solusi analytics lain yang membutuhkan consent banner karena menggunakan third-party cookies, ZedAnalytics menggunakan pendekatan cookieless yang tetap akurat dan tidak melanggar regulasi GDPR atau UU PDP Indonesia.
+
+```
+---
+
+## content/products/zedforms.md
+```md
+---
+title: "ZedForms"
+description: "Form builder dengan logika kondisional, integrasi webhook, dan analytics bawaan. Alternatif Typeform untuk bisnis yang butuh kontrol penuh atas data mereka."
+category: "SaaS Tool"
+features:
+  - "Drag-and-drop form builder dengan 20+ tipe field"
+  - "Logika kondisional untuk pengalaman yang dipersonalisasi"
+  - "Webhook ke Slack, WhatsApp, email, atau sistem custom"
+  - "Analytics respons dengan visualisasi real-time"
+  - "Export ke CSV, Excel, atau Google Sheets"
+  - "Custom domain dan branding"
+  - "GDPR-compliant dengan data hosting di Indonesia"
+  - "API penuh untuk integrasi ke sistem yang sudah ada"
+screenshots: []
+---
+
+ZedForms lahir dari kebutuhan klien yang ingin form yang lebih dari sekadar Google Forms — tapi tidak mau membayar mahal untuk Typeform dan tidak mau datanya disimpan di server luar negeri.
+
+Dibangun di atas stack Go dan PocketBase, ZedForms berjalan sepenuhnya di infrastruktur Indonesia dan bisa di-self-host untuk klien enterprise yang memiliki kebutuhan compliance khusus.
+
+```
+---
+
+## content/projects/aplikasi-mobile-logistik.md
+```md
+---
+title: "Aplikasi Mobile untuk Manajemen Armada Logistik"
+description: "Aplikasi Flutter cross-platform untuk manajemen armada pengiriman — tracking real-time, proof of delivery digital, dan dashboard analytics untuk dispatcher."
+date: 2025-02-10
+category: "Mobile"
+is_public: true
+client_name: "Confidential"
+thumbnail: ""
+problem: "Perusahaan logistik dengan 80+ armada masih menggunakan WhatsApp untuk koordinasi pengiriman. Tidak ada visibility real-time, bukti pengiriman mudah hilang, dan dispute dengan klien sulit diselesaikan."
+solution: "Aplikasi mobile untuk driver dengan GPS tracking dan digital POD, serta web dashboard untuk dispatcher dengan monitoring armada real-time dan laporan performa otomatis."
+result: "Dispute pengiriman turun 90% berkat bukti digital yang timestamped. Efisiensi rute meningkat 25% dengan optimasi berbasis data historis. Onboarding driver baru dari 1 minggu menjadi 1 hari."
+tech_stack: ["Flutter", "Go", "PostgreSQL", "Google Maps API", "Firebase FCM", "Docker"]
+---
+
+## Tantangan Utama: Konektivitas
+
+Driver sering beroperasi di area dengan sinyal tidak stabil. Aplikasi harus bisa bekerja offline dan melakukan sinkronisasi otomatis saat koneksi kembali — tanpa data hilang atau duplikasi.
+
+Kami mengimplementasikan offline-first architecture menggunakan SQLite lokal di device, dengan conflict resolution yang deterministik saat sync ke server.
+
+## Digital Proof of Delivery
+
+Fitur POD digital mencakup foto barang, tanda tangan digital penerima, dan geolocation timestamp yang tidak bisa dimanipulasi. Data ini disimpan di server dengan integritas yang terjamin dan bisa diakses kapanpun untuk dispute resolution.
+
+```
+---
+
+## content/projects/platform-inventori-retail.md
+```md
+---
+title: "Platform Manajemen Inventori untuk Jaringan Retail"
+description: "Sistem terpusat yang menghubungkan 47 outlet retail dengan manajemen stok real-time, laporan otomatis, dan integrasi kasir."
+date: 2025-08-01
+category: "Web"
+is_public: true
+client_name: "RetailPlus (nama disamarkan)"
+thumbnail: ""
+problem: "Klien mengelola 47 outlet dengan sistem stok yang tersebar — sebagian pakai spreadsheet, sebagian pakai software kasir yang berbeda-beda. Rekap stok harian membutuhkan 3-4 jam kerja manual setiap hari."
+solution: "Platform terpusat berbasis web dengan sinkronisasi stok real-time antar outlet, dashboard analytics, dan API yang terhubung ke berbagai sistem kasir yang sudah ada."
+result: "Waktu rekap stok turun dari 3 jam menjadi 8 menit. ROI terasa dalam 3 bulan pertama. Sistem kini melayani 200+ pengguna aktif tanpa downtime berarti."
+tech_stack: ["Go", "PocketBase", "React", "Tailwind CSS", "Cloudflare", "Caddy"]
+---
+
+## Latar Belakang
+
+Klien adalah jaringan retail yang bergerak di segmen kebutuhan rumah tangga. Dengan 47 outlet yang tersebar di 3 kota, mereka menghadapi tantangan klasik bisnis yang tumbuh cepat tanpa infrastruktur digital yang memadai.
+
+## Tantangan Teknis
+
+Setiap outlet menggunakan sistem kasir yang berbeda — ada yang pakai software lokal lama, ada yang pakai tablet dengan aplikasi cloud, ada yang masih manual. Menyatukan data dari semua sumber ini adalah tantangan utama.
+
+Kami membangun layer abstraksi yang memungkinkan setiap jenis sumber data terhubung ke platform pusat tanpa harus mengganti sistem yang sudah ada di outlet.
+
+## Arsitektur
+
+Backend dibangun di atas PocketBase yang di-extend dengan Go untuk business logic kustom — validasi stok, kalkulasi HPP, dan trigger notifikasi otomatis. Frontend menggunakan React dengan update real-time via SSE.
+
+Seluruh sistem berjalan di satu VPS dengan biaya operasional di bawah Rp 300 ribu per bulan.
+
+```
+---
+
+## content/projects/saas-manajemen-klinik.md
+```md
+---
+title: "SaaS Manajemen Klinik Kecantikan"
+description: "Platform multi-tenant untuk jaringan klinik kecantikan — dari penjadwalan pasien, rekam medis digital, hingga manajemen stok produk perawatan."
+date: 2025-06-15
+category: "SaaS"
+is_public: true
+client_name: "Confidential"
+thumbnail: ""
+problem: "Jaringan klinik dengan 12 cabang tidak memiliki sistem terpusat. Data pasien tidak bisa diakses antar cabang, stok produk sering tidak akurat, dan laporan bulanan dibuat manual dari berbagai sumber."
+solution: "SaaS multi-tenant yang memungkinkan setiap cabang beroperasi secara independen namun terhubung ke dashboard pusat untuk monitoring dan pelaporan konsolidasi."
+result: "Waktu administrasi per kunjungan pasien berkurang 65%. No-show rate turun 40% berkat reminder otomatis. Laporan konsolidasi yang sebelumnya memakan 2 hari kini tersedia real-time."
+tech_stack: ["Go", "PostgreSQL", "Next.js", "Tailwind CSS", "Stripe", "Docker", "Cloudflare"]
+---
+
+## Tantangan Multi-tenancy
+
+Membangun SaaS untuk industri kesehatan membutuhkan perhatian ekstra pada isolasi data antar tenant. Kami menggunakan row-level security di PostgreSQL untuk memastikan data setiap klinik benar-benar terisolasi, bahkan dari perspektif query yang tidak sengaja.
+
+## Fitur Utama
+
+Sistem penjadwalan dengan manajemen slot yang cerdas, rekam medis digital dengan riwayat lengkap per pasien, manajemen stok produk dengan alert otomatis, dan billing terintegrasi dengan berbagai metode pembayaran.
+
+## Onboarding yang Terstandarisasi
+
+Salah satu investasi terbesar kami di proyek ini adalah onboarding flow. Klinik baru bisa fully operational dalam 30 menit — mulai dari setup profil, konfigurasi jadwal dokter, hingga import data pasien dari sistem lama.
+
+```
+---
+
+## content/projects/website-perusahaan-manufaktur.md
+```md
+---
+title: "Website Korporat untuk Perusahaan Manufaktur"
+description: "Redesign total website perusahaan manufaktur dengan 30 tahun sejarah — dari desain lama yang tidak mobile-friendly menjadi platform modern dengan Lighthouse score 99."
+date: 2025-04-20
+category: "Web"
+is_public: true
+client_name: "PT Karya Industri (nama disamarkan)"
+thumbnail: ""
+problem: "Website lama dibangun tahun 2015, tidak responsif di mobile, Lighthouse score di bawah 40, dan tidak bisa diupdate oleh tim internal tanpa bantuan developer."
+solution: "Redesign menggunakan Hugo dengan CMS headless, sehingga tim marketing bisa update konten tanpa menyentuh kode. Optimasi performa di setiap layer."
+result: "Lighthouse score naik dari 38 menjadi 99. Organic traffic meningkat 3x dalam 4 bulan pertama. Tim marketing bisa publish artikel blog secara mandiri."
+tech_stack: ["Hugo", "Tailwind CSS", "Cloudflare Pages", "Decap CMS"]
+---
+
+## Pendekatan Kami
+
+Proyek ini bukan sekadar redesign visual. Kami mulai dengan audit menyeluruh terhadap performa, SEO, dan aksesibilitas website lama — mengidentifikasi lebih dari 60 issue yang perlu ditangani.
+
+Keputusan terpenting adalah pemilihan Hugo sebagai static site generator. Dengan ribuan halaman produk dan artikel, build time yang cepat dan output yang benar-benar statis adalah keharusan.
+
+## Integrasi CMS Headless
+
+Tim marketing klien tidak memiliki background teknis. Kami mengintegrasikan Decap CMS yang memberikan antarmuka editing visual langsung terhubung ke repository Git — tanpa server CMS tambahan yang perlu di-maintain.
+
+```
+---
+
+## content/services/it-consulting.md
+```md
+---
+title: "IT Consulting"
+description: "Audit teknologi, roadmap digital, dan rekomendasi stack yang tepat untuk skala bisnis Anda."
+badge: "Consulting"
+badge_color: "purple"
+icon: "brain"
+weight: 1
+---
+
+## Apa yang kami lakukan
+
+Banyak bisnis menghadapi masalah yang sama: sistem yang tidak scalable, stack yang salah pilih, atau roadmap yang tidak realistis. Kami masuk untuk memberikan perspektif teknis yang jujur dan actionable.
+
+## Layanan konsultasi kami
+
+**Technology Audit** — Evaluasi menyeluruh terhadap arsitektur, codebase, infrastruktur, dan proses engineering yang sedang berjalan.
+
+**Digital Roadmap** — Peta jalan transformasi digital yang realistis, diprioritaskan berdasarkan dampak bisnis dan kapasitas tim.
+
+**Stack Advisory** — Rekomendasi teknologi yang tepat berdasarkan kebutuhan saat ini dan proyeksi pertumbuhan, bukan tren semata.
+
+**CTO-as-a-Service** — Kepemimpinan teknis paruh waktu untuk startup atau perusahaan yang belum memiliki CTO tetap.
+
+## Untuk siapa
+
+- Startup yang ingin memastikan fondasi teknis sebelum scaling
+- Perusahaan yang sedang mengalami bottleneck teknis
+- Tim non-teknis yang ingin memahami pilihan teknologi mereka
+- Bisnis yang ingin melakukan migrasi sistem lama
+
+## Proses kerja
+
+1. Discovery call — memahami konteks bisnis dan masalah teknis
+2. Audit & assessment — evaluasi kondisi saat ini
+3. Laporan & rekomendasi — dokumen yang konkret dan actionable
+4. Sesi presentasi — walkthrough hasil dan diskusi prioritas
+5. Pendampingan opsional — support implementasi rekomendasi
+
+```
+---
+
+## content/services/mobile-development.md
+```md
+---
+title: "Web & Mobile Development"
+description: "Dari landing page hingga aplikasi kompleks. Produk yang performant, scalable, dan maintainable."
+badge: "Development"
+badge_color: "blue"
+icon: "globe"
+weight: 2
+---
+
+## Apa yang kami bangun
+
+Kami membangun produk digital yang dimaksudkan untuk tumbuh. Bukan prototype yang perlu dibuang ulang saat traffic naik, bukan codebase yang tidak ada yang bisa maintain setelah 6 bulan.
+
+## Spesialisasi
+
+**Web Application** — SPA, SSR, atau static site tergantung kebutuhan. Stack utama: Go, Hugo, React, Next.js.
+
+**Mobile Application** — Cross-platform dengan Flutter untuk efisiensi, atau native jika performa kritis.
+
+**API & Backend** — REST atau GraphQL API yang well-documented, dibangun di atas arsitektur yang tepat untuk skala.
+
+**Landing Page & Company Profile** — Dioptimasi untuk konversi dan SEO, bukan sekadar tampil bagus.
+
+## Standar yang kami jaga
+
+- Lighthouse score 90+ untuk semua produk web
+- Test coverage minimal untuk logika bisnis kritis
+- Dokumentasi teknis sebagai bagian dari deliverable
+- Code review dan handover yang proper
+
+## Timeline umum
+
+| Jenis Proyek | Estimasi |
+|---|---|
+| Landing page | 1–2 minggu |
+| Company profile | 2–3 minggu |
+| Web app MVP | 4–6 minggu |
+| Mobile app MVP | 6–10 minggu |
+| Platform kompleks | Diskusi scope |
+
+```
+---
+
+## content/services/web-development.md
+```md
+---
+title: "SaaS Development"
+description: "Kami rancang dan bangun produk SaaS dari nol — arsitektur, UI, billing, hingga go-to-market."
+badge: "SaaS"
+badge_color: "green"
+icon: "package"
+weight: 3
+---
+
+## Membangun SaaS yang benar
+
+SaaS bukan sekadar web app yang dibayar bulanan. Ada puluhan keputusan arsitektur yang harus benar sejak awal — multi-tenancy, billing, onboarding, observability. Salah di awal, biayanya mahal di kemudian hari.
+
+## Yang kami tangani
+
+**Arsitektur & Infrastruktur** — Multi-tenant database design, autentikasi, authorization, dan infrastruktur yang bisa scale.
+
+**Billing & Subscription** — Integrasi Stripe atau Midtrans, manajemen plan, trial, dan upgrade/downgrade flow.
+
+**Onboarding Flow** — User onboarding yang memastikan activation rate tinggi sejak hari pertama.
+
+**Admin Dashboard** — Internal tools untuk tim Anda mengelola user, subscription, dan data.
+
+**Analytics & Observability** — Error tracking, performance monitoring, dan product analytics bawaan.
+
+## Pendekatan kami
+
+Kami tidak langsung membangun semua fitur. Kami mulai dari core loop — fitur paling kritis yang membuat user mendapatkan value pertama mereka. Setelah itu iterasi berdasarkan data.
+
+## Deliverable
+
+- Source code dengan dokumentasi teknis
+- Deployment ke infrastruktur pilihan Anda
+- Runbook untuk operasional
+- Sesi handover ke tim internal
+
+```
+---
+
 ## data/partners.json
 ```json
 [
@@ -1558,7 +2219,7 @@ document.addEventListener("alpine:init", function () {
 baseURL = "https://zedlabs.id"
 defaultContentLanguage = "id"
 title = "ZEDLABS — Innovate Beyond Limits"
-theme = ""
+
 [languages]
   [languages.id]
     locale = "id"
@@ -2161,8 +2822,7 @@ theme = ""
 
   {{ partial "footer.html" . }}
 
-  {{ $js := resources.Get "js/main.js" | minify }}
-  <script src="{{ $js.RelPermalink }}"></script>
+  <script src="/js/main.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </body>
@@ -2342,7 +3002,7 @@ theme = ""
         &copy; {{ now.Year }} ZEDLABS. All rights reserved.
       </p>
       <p class="text-xs theme-text-muted font-mono">
-        Built with Hugo + PocketBase
+        Built with Hugo
       </p>
     </div>
 
@@ -2397,8 +3057,7 @@ theme = ""
   href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
   rel="stylesheet" />
 
-{{ $css := resources.Get "css/main.css" }}
-<link rel="stylesheet" href="{{ $css.RelPermalink }}" />
+<link rel="stylesheet" href="/css/main.css" />
 
 <script>
   (function () {
@@ -3196,7 +3855,7 @@ theme = ""
   "private": true,
   "scripts": {
     "dev": "concurrently \"tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --watch\" \"hugo server --disableFastRender\"",
-    "build": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --minify && hugo --minify",
+    "build": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --minify && cp ./assets/js/main.js ./static/js/main.js && hugo --minify",
     "clean": "rm -rf public resources"
   },
   "devDependencies": {
@@ -3646,9 +4305,6 @@ allowBuilds:
   .h-1\.5 {
     height: calc(var(--spacing) * 1.5);
   }
-  .h-1\/2 {
-    height: calc(1 / 2 * 100%);
-  }
   .h-2 {
     height: calc(var(--spacing) * 2);
   }
@@ -3693,9 +4349,6 @@ allowBuilds:
   }
   .h-\[500px\] {
     height: 500px;
-  }
-  .h-\[800px\] {
-    height: 800px;
   }
   .h-full {
     height: 100%;
@@ -3750,9 +4403,6 @@ allowBuilds:
   }
   .w-\[600px\] {
     width: 600px;
-  }
-  .w-\[800px\] {
-    width: 800px;
   }
   .w-full {
     width: 100%;
@@ -3884,6 +4534,9 @@ allowBuilds:
   .justify-center {
     justify-content: center;
   }
+  .gap-0 {
+    gap: 0;
+  }
   .gap-0\.5 {
     gap: calc(var(--spacing) * 0.5);
   }
@@ -3922,6 +4575,13 @@ allowBuilds:
   }
   .gap-20 {
     gap: calc(var(--spacing) * 20);
+  }
+  .space-y-0 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: 0;
+      margin-block-end: 0;
+    }
   }
   .space-y-0\.5 {
     :where(& > :not(:last-child)) {
@@ -4167,9 +4827,6 @@ allowBuilds:
   .py-1 {
     padding-block: var(--spacing);
   }
-  .py-1\.5 {
-    padding-block: calc(var(--spacing) * 1.5);
-  }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
@@ -4315,9 +4972,6 @@ allowBuilds:
     --tw-tracking: var(--tracking-widest);
     letter-spacing: var(--tracking-widest);
   }
-  .text-\[\#3fb950\] {
-    color: #3fb950;
-  }
   .text-\[\#6e7681\] {
     color: #6e7681;
   }
@@ -4326,9 +4980,6 @@ allowBuilds:
   }
   .text-\[\#388bfd\] {
     color: #388bfd;
-  }
-  .text-\[\#30363d\] {
-    color: #30363d;
   }
   .text-\[\#238636\] {
     color: #238636;
@@ -4388,6 +5039,10 @@ allowBuilds:
   }
   .blur-3xl {
     --tw-blur: blur(var(--blur-3xl));
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .invert {
+    --tw-invert: invert(100%);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .filter {
@@ -4487,13 +5142,6 @@ allowBuilds:
       }
     }
   }
-  .hover\:border-\[\#8b949e\] {
-    &:hover {
-      @media (hover: hover) {
-        border-color: #8b949e;
-      }
-    }
-  }
   .hover\:bg-\[\#161b22\] {
     &:hover {
       @media (hover: hover) {
@@ -4505,13 +5153,6 @@ allowBuilds:
     &:hover {
       @media (hover: hover) {
         color: #388bfd;
-      }
-    }
-  }
-  .hover\:text-\[\#e6edf3\] {
-    &:hover {
-      @media (hover: hover) {
-        color: #e6edf3;
       }
     }
   }
@@ -4530,24 +5171,6 @@ allowBuilds:
   .focus\:ring-red-500 {
     &:focus {
       --tw-ring-color: var(--color-red-500);
-    }
-  }
-  .focus\:outline-none {
-    &:focus {
-      --tw-outline-style: none;
-      outline-style: none;
-    }
-  }
-  .focus-visible\:ring-2 {
-    &:focus-visible {
-      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-  }
-  .focus-visible\:ring-offset-2 {
-    &:focus-visible {
-      --tw-ring-offset-width: 2px;
-      --tw-ring-offset-shadow: var(--tw-ring-inset,) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
     }
   }
   .focus-visible\:outline-none {
@@ -6077,71 +6700,6 @@ allowBuilds:
   syntax: "*";
   inherits: false;
 }
-@property --tw-shadow {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0 0 #0000;
-}
-@property --tw-shadow-color {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-shadow-alpha {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-@property --tw-inset-shadow {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0 0 #0000;
-}
-@property --tw-inset-shadow-color {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-inset-shadow-alpha {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-@property --tw-ring-color {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-ring-shadow {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0 0 #0000;
-}
-@property --tw-inset-ring-color {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-inset-ring-shadow {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0 0 #0000;
-}
-@property --tw-ring-inset {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-ring-offset-width {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-@property --tw-ring-offset-color {
-  syntax: "*";
-  inherits: false;
-  initial-value: #fff;
-}
-@property --tw-ring-offset-shadow {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0 0 #0000;
-}
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -6205,20 +6763,6 @@ allowBuilds:
       --tw-backdrop-sepia: initial;
       --tw-duration: initial;
       --tw-ease: initial;
-      --tw-shadow: 0 0 #0000;
-      --tw-shadow-color: initial;
-      --tw-shadow-alpha: 100%;
-      --tw-inset-shadow: 0 0 #0000;
-      --tw-inset-shadow-color: initial;
-      --tw-inset-shadow-alpha: 100%;
-      --tw-ring-color: initial;
-      --tw-ring-shadow: 0 0 #0000;
-      --tw-inset-ring-color: initial;
-      --tw-inset-ring-shadow: 0 0 #0000;
-      --tw-ring-inset: initial;
-      --tw-ring-offset-width: 0px;
-      --tw-ring-offset-color: #fff;
-      --tw-ring-offset-shadow: 0 0 #0000;
     }
   }
 }

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-@source "../../layouts/**/*.html";
-@source "../../content/**/*.md";
+@source "../layouts/**/*.html";
+@source "../content/**/*.md";
 
 @theme {
   --font-sans: "Lexend", system-ui, sans-serif;
