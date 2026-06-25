@@ -28,20 +28,6 @@ about:
       title: "Transparan"
       desc: "Progress real-time, tidak ada kejutan di akhir proyek."
 
-stats:
-  - label: "Klien Puas"
-    value: 47
-    suffix: "+"
-  - label: "Proyek Selesai"
-    value: 120
-    suffix: "+"
-  - label: "Tahun Pengalaman"
-    value: 5
-    suffix: "+"
-  - label: "Uptime SaaS"
-    value: 99
-    suffix: ".9%"
-
 services:
   label: "Layanan"
   title: "Apa yang kami kerjakan"

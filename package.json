@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "hugo server --disableFastRender",
-    "build": "hugo --minify",
+    "dev": "concurrently \"tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --watch\" \"hugo server --disableFastRender\"",
+    "build": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --minify && hugo --minify",
     "clean": "rm -rf public resources"
   },
   "devDependencies": {
     "@tailwindcss/cli": "latest",
+    "concurrently": "^10.0.3",
     "tailwindcss": "latest"
   }
 }

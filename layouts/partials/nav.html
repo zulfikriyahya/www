@@ -1,33 +1,43 @@
 <header x-data="{ open: false, scrolled: false }"
   x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 20 })"
-  :class="scrolled ? 'border-b border-[#21262d] bg-[#0d1117]/90 backdrop-blur-md' : 'bg-transparent'"
+  :class="scrolled ? 'border-b theme-border theme-bg-primary bg-opacity-90 backdrop-blur-md' : 'bg-transparent'"
   class="fixed left-0 right-0 top-0 z-50 transition-all duration-300">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
 
       <a href="/" class="flex items-center gap-2">
-        <div
-          class="flex h-8 w-8 items-center justify-center rounded-md bg-[#238636] font-mono text-sm font-bold text-white">
+        <div class="flex h-8 w-8 items-center justify-center rounded-md font-mono text-sm font-bold text-white"
+          style="background-color: #238636;">
           Z
         </div>
-        <span class="font-bold tracking-tight text-[#e6edf3]">
-          ZED<span class="text-[#238636]">LABS</span>
+        <span class="font-bold tracking-tight theme-text-primary">
+          ZED<span style="color: #238636;">LABS</span>
         </span>
       </a>
 
       <nav class="hidden items-center gap-1 md:flex">
         {{ range .Site.Menus.main }}
-
-        href="{{ .URL }}"
-        class="rounded-md px-3 py-1.5 text-sm text-[#8b949e] transition-all duration-150 hover:bg-[#161b22]
-        hover:text-[#e6edf3]"
-        >
-        {{ .Name }}
-        </a>
-        {{ end }}
+        <a href="{{ .URL }}" class="rounded-md px-3 py-1.5 text-sm theme-text-secondary transition-all duration-150 hover:theme-bg-surface
+        hover:theme-text-primary">
+          {{ .Name }}
+      </a>
+          {{ end }}
       </nav>
 
       <div class="hidden items-center gap-3 md:flex">
+        <button onclick="toggleTheme()"
+          class="rounded-md border p-2 transition-colors duration-150 theme-border theme-text-secondary hover:theme-text-primary hover:theme-bg-surface"
+          aria-label="Toggle theme">
+          <svg data-icon-moon class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+          <svg data-icon-sun class="h-4 w-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </button>
+
         <a href="/contact" class="btn-primary text-sm">
           Mulai Konsultasi
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +47,7 @@
       </div>
 
       <button @click="open = !open"
-        class="rounded-md p-2 text-[#8b949e] transition-colors hover:bg-[#161b22] hover:text-[#e6edf3] md:hidden"
+        class="rounded-md p-2 theme-text-secondary transition-colors hover:theme-bg-surface hover:theme-text-primary md:hidden"
         aria-label="Toggle menu">
         <svg x-show="!open" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -54,20 +64,28 @@
     x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
     x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 translate-y-0"
     x-transition:leave-end="opacity-0 -translate-y-1"
-    class="border-t border-[#21262d] bg-[#0d1117]/95 backdrop-blur-md md:hidden">
+    class="border-t theme-border theme-bg-primary bg-opacity-95 backdrop-blur-md md:hidden">
     <div class="space-y-1 px-4 py-4">
       {{ range .Site.Menus.main }}
-
-      href="{{ .URL }}"
-      @click="open = false"
-      class="block rounded-md px-3 py-2 text-sm text-[#8b949e] transition-colors hover:bg-[#161b22]
-      hover:text-[#e6edf3]"
-      >
-      {{ .Name }}
+      <a href="{{ .URL }}" @click="open = false" class="block rounded-md px-3 py-2 text-sm theme-text-secondary transition-colors hover:theme-bg-surface
+      hover:theme-text-primary">
+        {{ .Name }}
       </a>
       {{ end }}
-      <div class="border-t border-[#21262d] pt-3">
-        <a href="/contact" class="btn-primary w-full justify-center">
+      <div class="border-t theme-border pt-3 flex items-center gap-3">
+        <button onclick="toggleTheme()"
+          class="rounded-md border p-2 transition-colors theme-border theme-text-secondary hover:theme-text-primary hover:theme-bg-surface"
+          aria-label="Toggle theme">
+          <svg data-icon-moon class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+          <svg data-icon-sun class="h-4 w-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </button>
+        <a href="/contact" class="btn-primary flex-1 justify-center">
           Mulai Konsultasi
         </a>
       </div>
