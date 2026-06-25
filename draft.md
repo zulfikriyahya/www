@@ -41,12 +41,12 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     background-color: #0a0a0f;
     color: #e6edf3;
     font-family: var(--font-sans);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
     overflow-x: hidden;
   }
 
   html.light body {
-    background-color: #fafafa;
+    background-color: #f6f8fa;
     color: #1f2328;
   }
 
@@ -58,23 +58,24 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   :focus-visible {
     outline: 2px solid #238636;
     outline-offset: 2px;
+    border-radius: 4px;
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #0a0a0f;
-  }
-
-  html.light ::-webkit-scrollbar-track {
-    background: #fafafa;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #30363d;
-    border-radius: 3px;
+    background: rgba(48, 54, 61, 0.8);
+    border-radius: 99px;
+  }
+
+  html.light ::-webkit-scrollbar-thumb {
+    background: rgba(208, 215, 222, 0.8);
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -83,6 +84,8 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
 }
 
 @layer components {
+
+  /* Layout */
   .container-content {
     @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
   }
@@ -91,6 +94,97 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     @apply py-24 sm:py-32;
   }
 
+  /* Scroll progress */
+  #scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    z-index: 9999;
+    background: linear-gradient(90deg, #238636, #3fb950, #79c0ff);
+    transition: width 0.1s linear;
+    pointer-events: none;
+  }
+
+  /* Nav */
+  .nav-scrolled {
+    background: rgba(10, 10, 15, 0.85);
+    border-color: rgba(48, 54, 61, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  html.light .nav-scrolled {
+    background: rgba(246, 248, 250, 0.88);
+    border-color: rgba(208, 215, 222, 0.5);
+  }
+
+  .nav-active {
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.6);
+  }
+
+  html.light .nav-active {
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.6);
+  }
+
+  /* Hero backgrounds */
+  .hero-bg-dark {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(35, 134, 54, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(31, 111, 235, 0.08) 0%, transparent 50%),
+      #0a0a0f;
+  }
+
+  html.light .hero-bg-dark {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(26, 127, 55, 0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(9, 105, 218, 0.05) 0%, transparent 50%),
+      #f6f8fa;
+  }
+
+  .hero-grid {
+    background-image:
+      linear-gradient(rgba(56, 139, 253, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 139, 253, 0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 70%, transparent 100%);
+  }
+
+  html.light .hero-grid {
+    background-image:
+      linear-gradient(rgba(9, 105, 218, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(9, 105, 218, 0.04) 1px, transparent 1px);
+  }
+
+  .scroll-line {
+    background: rgba(110, 118, 129, 0.2);
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent, #3fb950, transparent);
+    animation: scroll-line-move 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-line-move {
+    0% {
+      transform: translateY(-100%);
+    }
+
+    100% {
+      transform: translateY(300%);
+    }
+  }
+
+  /* Labels & Badges */
   .section-label {
     @apply inline-flex items-center gap-2 text-xs font-mono font-medium uppercase tracking-widest px-3 py-1 rounded-full border;
     color: #3fb950;
@@ -119,20 +213,21 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   }
 
   html.light .section-subtitle {
-    color: #656d76;
+    color: #57606a;
   }
 
+  /* Buttons */
   .btn-primary {
-    @apply inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 relative overflow-hidden;
+    @apply inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-200 focus-visible:outline-none relative overflow-hidden;
     background: linear-gradient(135deg, #238636, #1a7f37);
-    box-shadow: 0 0 20px rgba(35, 134, 54, 0.3);
+    box-shadow: 0 0 20px rgba(35, 134, 54, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .btn-primary::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent);
     opacity: 0;
     transition: opacity 0.2s;
   }
@@ -142,37 +237,42 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   }
 
   .btn-primary:hover {
-    box-shadow: 0 0 30px rgba(35, 134, 54, 0.5);
+    box-shadow: 0 0 32px rgba(35, 134, 54, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     transform: translateY(-1px);
   }
 
   .btn-primary:active {
     transform: translateY(0);
+    box-shadow: 0 0 16px rgba(35, 134, 54, 0.3);
   }
 
   .btn-outline {
     @apply inline-flex items-center gap-2 rounded-xl border px-6 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none relative overflow-hidden;
     border-color: rgba(48, 54, 61, 0.8);
     color: #e6edf3;
-    background: rgba(22, 27, 34, 0.5);
+    background: rgba(22, 27, 34, 0.4);
     backdrop-filter: blur(12px);
   }
 
   .btn-outline:hover {
-    border-color: rgba(139, 148, 158, 0.6);
-    background: rgba(33, 38, 45, 0.8);
+    border-color: rgba(139, 148, 158, 0.5);
+    background: rgba(33, 38, 45, 0.7);
     transform: translateY(-1px);
   }
 
+  .btn-outline:active {
+    transform: translateY(0);
+  }
+
   html.light .btn-outline {
-    border-color: rgba(208, 215, 222, 0.8);
+    border-color: rgba(208, 215, 222, 0.9);
     color: #1f2328;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.6);
   }
 
   html.light .btn-outline:hover {
-    border-color: rgba(140, 149, 159, 0.6);
-    background: rgba(246, 248, 250, 0.8);
+    border-color: rgba(140, 149, 159, 0.7);
+    background: rgba(246, 248, 250, 0.9);
   }
 
   .btn-secondary {
@@ -195,7 +295,7 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   }
 
   html.light .btn-secondary:hover {
-    background: rgba(234, 238, 242, 0.8);
+    background: rgba(234, 238, 242, 0.9);
   }
 
   .btn-ghost {
@@ -208,9 +308,15 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     color: #e6edf3;
   }
 
+  html.light .btn-ghost:hover {
+    background: rgba(234, 238, 242, 0.6);
+    color: #1f2328;
+  }
+
+  /* Cards */
   .glass-card {
     @apply rounded-2xl border relative overflow-hidden;
-    border-color: rgba(48, 54, 61, 0.6);
+    border-color: rgba(48, 54, 61, 0.5);
     background: rgba(22, 27, 34, 0.4);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -218,35 +324,37 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
 
   html.light .glass-card {
     border-color: rgba(208, 215, 222, 0.6);
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
   }
 
   .glass-card::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
     pointer-events: none;
   }
 
   html.light .glass-card::before {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, transparent 60%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, transparent 60%);
   }
 
   .card {
     @apply rounded-2xl border;
-    border-color: rgba(48, 54, 61, 0.6);
+    border-color: rgba(48, 54, 61, 0.5);
     background: rgba(22, 27, 34, 0.6);
   }
 
   html.light .card {
     border-color: rgba(208, 215, 222, 0.6);
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
 
   .card-interactive {
-    @apply rounded-2xl border transition-all duration-300 relative overflow-hidden;
-    border-color: rgba(48, 54, 61, 0.6);
+    @apply rounded-2xl border transition-all duration-300 relative overflow-hidden cursor-pointer;
+    border-color: rgba(48, 54, 61, 0.5);
     background: rgba(22, 27, 34, 0.4);
     backdrop-filter: blur(12px);
   }
@@ -255,88 +363,95 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(56, 139, 253, 0.05), transparent);
+    background: linear-gradient(135deg, rgba(56, 139, 253, 0.04), transparent);
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
   }
 
   .card-interactive:hover {
-    border-color: rgba(56, 139, 253, 0.4);
-    box-shadow: 0 0 0 1px rgba(56, 139, 253, 0.2), 0 8px 32px rgba(56, 139, 253, 0.1);
-    transform: translateY(-2px);
+    border-color: rgba(56, 139, 253, 0.35);
+    box-shadow: 0 0 0 1px rgba(56, 139, 253, 0.15), 0 8px 32px rgba(56, 139, 253, 0.08);
+    transform: translateY(-3px);
   }
 
   .card-interactive:hover::before {
     opacity: 1;
   }
 
+  .card-interactive:active {
+    transform: translateY(-1px);
+  }
+
   html.light .card-interactive {
-    border-color: rgba(208, 215, 222, 0.6);
-    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(208, 215, 222, 0.7);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
 
   html.light .card-interactive:hover {
-    border-color: rgba(9, 105, 218, 0.4);
-    box-shadow: 0 0 0 1px rgba(9, 105, 218, 0.2), 0 8px 32px rgba(9, 105, 218, 0.08);
+    border-color: rgba(9, 105, 218, 0.3);
+    box-shadow: 0 0 0 1px rgba(9, 105, 218, 0.15), 0 8px 32px rgba(9, 105, 218, 0.07);
   }
 
+  /* Badges */
   .badge-purple {
     @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium;
-    border-color: rgba(61, 36, 117, 0.6);
-    background: rgba(45, 28, 92, 0.4);
+    border-color: rgba(61, 36, 117, 0.5);
+    background: rgba(45, 28, 92, 0.35);
     color: #a371f7;
     backdrop-filter: blur(8px);
   }
 
   html.light .badge-purple {
-    border-color: rgba(130, 80, 223, 0.3);
-    background: rgba(251, 239, 255, 0.8);
+    border-color: rgba(130, 80, 223, 0.25);
+    background: rgba(251, 239, 255, 0.85);
     color: #6639ba;
   }
 
   .badge-blue {
     @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium;
-    border-color: rgba(17, 88, 199, 0.6);
-    background: rgba(12, 45, 107, 0.4);
+    border-color: rgba(17, 88, 199, 0.5);
+    background: rgba(12, 45, 107, 0.35);
     color: #388bfd;
     backdrop-filter: blur(8px);
   }
 
   html.light .badge-blue {
-    border-color: rgba(9, 105, 218, 0.3);
-    background: rgba(221, 244, 255, 0.8);
+    border-color: rgba(9, 105, 218, 0.25);
+    background: rgba(221, 244, 255, 0.85);
     color: #0550ae;
   }
 
   .badge-green {
     @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium;
-    border-color: rgba(35, 134, 54, 0.6);
-    background: rgba(15, 45, 26, 0.4);
+    border-color: rgba(35, 134, 54, 0.5);
+    background: rgba(15, 45, 26, 0.35);
     color: #3fb950;
     backdrop-filter: blur(8px);
   }
 
   html.light .badge-green {
-    border-color: rgba(26, 127, 55, 0.3);
-    background: rgba(218, 251, 225, 0.8);
+    border-color: rgba(26, 127, 55, 0.25);
+    background: rgba(218, 251, 225, 0.85);
     color: #116329;
   }
 
   .badge-orange {
     @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium;
-    border-color: rgba(155, 79, 18, 0.6);
-    background: rgba(45, 26, 10, 0.4);
+    border-color: rgba(155, 79, 18, 0.5);
+    background: rgba(45, 26, 10, 0.35);
     color: #f0883e;
     backdrop-filter: blur(8px);
   }
 
   html.light .badge-orange {
-    border-color: rgba(188, 76, 0, 0.3);
-    background: rgba(255, 241, 229, 0.8);
+    border-color: rgba(188, 76, 0, 0.25);
+    background: rgba(255, 241, 229, 0.85);
     color: #953800;
   }
 
+  /* Tags */
   .tag {
     @apply rounded-full border px-3 py-1 font-mono text-xs transition-all duration-200;
     border-color: rgba(48, 54, 61, 0.6);
@@ -348,14 +463,21 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   .tag:hover {
     border-color: rgba(139, 148, 158, 0.4);
     color: #8b949e;
+    background: rgba(33, 38, 45, 0.5);
   }
 
   html.light .tag {
-    border-color: rgba(208, 215, 222, 0.6);
-    background: rgba(246, 248, 250, 0.6);
+    border-color: rgba(208, 215, 222, 0.7);
+    background: rgba(246, 248, 250, 0.7);
     color: #57606a;
   }
 
+  html.light .tag:hover {
+    border-color: rgba(140, 149, 159, 0.5);
+    color: #424a53;
+  }
+
+  /* Text gradients */
   .text-gradient-green {
     background: linear-gradient(135deg, #3fb950 0%, #238636 50%, #1a7f37 100%);
     -webkit-background-clip: text;
@@ -377,6 +499,7 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     background-clip: text;
   }
 
+  /* Glows */
   .glow-green {
     box-shadow: 0 0 40px rgba(35, 134, 54, 0.15);
   }
@@ -385,13 +508,79 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     box-shadow: 0 0 40px rgba(31, 111, 235, 0.15);
   }
 
+  /* Theme tokens */
+  .theme-bg-primary {
+    background-color: #0a0a0f;
+  }
+
+  html.light .theme-bg-primary {
+    background-color: #f6f8fa;
+  }
+
+  .theme-bg-surface {
+    background-color: rgba(22, 27, 34, 0.6);
+  }
+
+  html.light .theme-bg-surface {
+    background-color: rgba(246, 248, 250, 0.7);
+  }
+
+  .theme-bg-overlay {
+    background-color: rgba(33, 38, 45, 0.6);
+  }
+
+  html.light .theme-bg-overlay {
+    background-color: rgba(234, 238, 242, 0.7);
+  }
+
+  .theme-border {
+    border-color: rgba(48, 54, 61, 0.6);
+  }
+
+  html.light .theme-border {
+    border-color: rgba(208, 215, 222, 0.7);
+  }
+
+  .theme-border-muted {
+    border-color: rgba(33, 38, 45, 0.6);
+  }
+
+  html.light .theme-border-muted {
+    border-color: rgba(234, 238, 242, 0.7);
+  }
+
+  .theme-text-primary {
+    color: #e6edf3;
+  }
+
+  html.light .theme-text-primary {
+    color: #1f2328;
+  }
+
+  .theme-text-secondary {
+    color: #8b949e;
+  }
+
+  html.light .theme-text-secondary {
+    color: #57606a;
+  }
+
+  .theme-text-muted {
+    color: #6e7681;
+  }
+
+  html.light .theme-text-muted {
+    color: #8c959f;
+  }
+
+  /* Prose */
   .prose-zed {
     @apply leading-relaxed;
     color: #8b949e;
   }
 
   html.light .prose-zed {
-    color: #656d76;
+    color: #57606a;
   }
 
   .prose-zed h2 {
@@ -429,6 +618,10 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     color: #0969da;
   }
 
+  html.light .prose-zed a:hover {
+    color: #0550ae;
+  }
+
   .prose-zed ul {
     @apply mt-4 list-disc pl-6 space-y-2;
   }
@@ -445,26 +638,30 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   }
 
   html.light .prose-zed code {
-    background: rgba(246, 248, 250, 0.8);
+    background: rgba(246, 248, 250, 0.9);
     color: #953800;
-    border-color: rgba(208, 215, 222, 0.6);
+    border-color: rgba(208, 215, 222, 0.7);
   }
 
   .prose-zed pre {
     @apply mt-4 overflow-x-auto rounded-2xl border p-6;
     border-color: rgba(48, 54, 61, 0.6);
-    background: rgba(13, 17, 23, 0.8);
+    background: rgba(13, 17, 23, 0.9);
     backdrop-filter: blur(12px);
   }
 
   html.light .prose-zed pre {
-    border-color: rgba(208, 215, 222, 0.6);
-    background: rgba(246, 248, 250, 0.8);
+    border-color: rgba(208, 215, 222, 0.7);
+    background: rgba(246, 248, 250, 0.95);
   }
 
   .prose-zed pre code {
     @apply border-0 bg-transparent p-0;
     color: #e6edf3;
+  }
+
+  html.light .prose-zed pre code {
+    color: #1f2328;
   }
 
   .prose-zed blockquote {
@@ -485,6 +682,10 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     border-color: rgba(48, 54, 61, 0.6);
   }
 
+  html.light .prose-zed img {
+    border-color: rgba(208, 215, 222, 0.7);
+  }
+
   .prose-zed table {
     @apply mt-6 w-full text-sm border-collapse;
   }
@@ -497,7 +698,7 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
 
   html.light .prose-zed th {
     color: #1f2328;
-    border-color: rgba(208, 215, 222, 0.6);
+    border-color: rgba(208, 215, 222, 0.7);
   }
 
   .prose-zed td {
@@ -507,14 +708,15 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   }
 
   html.light .prose-zed td {
-    color: #656d76;
-    border-color: rgba(234, 238, 242, 0.6);
+    color: #57606a;
+    border-color: rgba(234, 238, 242, 0.7);
   }
 
+  /* Form inputs */
   .input {
-    @apply w-full rounded-xl border px-4 py-3 text-sm transition-all duration-200 focus:outline-none focus:ring-2;
+    @apply w-full rounded-xl border px-4 py-3 text-sm transition-all duration-200 focus:outline-none;
     border-color: rgba(48, 54, 61, 0.6);
-    background: rgba(13, 17, 23, 0.6);
+    background: rgba(13, 17, 23, 0.5);
     color: #e6edf3;
     backdrop-filter: blur(12px);
   }
@@ -524,15 +726,14 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   }
 
   .input:focus {
-    border-color: rgba(56, 139, 253, 0.6);
-    background: rgba(13, 17, 23, 0.8);
-    --tw-ring-color: rgba(56, 139, 253, 0.2);
-    box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.15);
+    border-color: rgba(56, 139, 253, 0.5);
+    background: rgba(13, 17, 23, 0.7);
+    box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.12);
   }
 
   html.light .input {
-    border-color: rgba(208, 215, 222, 0.8);
-    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(208, 215, 222, 0.9);
+    background: rgba(255, 255, 255, 0.85);
     color: #1f2328;
   }
 
@@ -541,9 +742,9 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   }
 
   html.light .input:focus {
-    border-color: rgba(9, 105, 218, 0.6);
-    background: rgba(255, 255, 255, 0.95);
-    --tw-ring-color: rgba(9, 105, 218, 0.15);
+    border-color: rgba(9, 105, 218, 0.5);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
   }
 
   .label {
@@ -555,70 +756,7 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     color: #1f2328;
   }
 
-  .theme-bg-primary {
-    background-color: #0a0a0f;
-  }
-
-  html.light .theme-bg-primary {
-    background-color: #fafafa;
-  }
-
-  .theme-bg-surface {
-    background-color: rgba(22, 27, 34, 0.6);
-  }
-
-  html.light .theme-bg-surface {
-    background-color: rgba(246, 248, 250, 0.6);
-  }
-
-  .theme-bg-overlay {
-    background-color: rgba(33, 38, 45, 0.6);
-  }
-
-  html.light .theme-bg-overlay {
-    background-color: rgba(234, 238, 242, 0.6);
-  }
-
-  .theme-border {
-    border-color: rgba(48, 54, 61, 0.6);
-  }
-
-  html.light .theme-border {
-    border-color: rgba(208, 215, 222, 0.6);
-  }
-
-  .theme-border-muted {
-    border-color: rgba(33, 38, 45, 0.6);
-  }
-
-  html.light .theme-border-muted {
-    border-color: rgba(234, 238, 242, 0.6);
-  }
-
-  .theme-text-primary {
-    color: #e6edf3;
-  }
-
-  html.light .theme-text-primary {
-    color: #1f2328;
-  }
-
-  .theme-text-secondary {
-    color: #8b949e;
-  }
-
-  html.light .theme-text-secondary {
-    color: #656d76;
-  }
-
-  .theme-text-muted {
-    color: #6e7681;
-  }
-
-  html.light .theme-text-muted {
-    color: #8c959f;
-  }
-
+  /* Noise texture */
   .noise-bg {
     position: relative;
   }
@@ -629,9 +767,10 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
     pointer-events: none;
-    opacity: 0.4;
+    opacity: 0.35;
   }
 
+  /* Animations */
   @keyframes float {
 
     0%,
@@ -640,11 +779,11 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     }
 
     33% {
-      transform: translateY(-20px) rotate(1deg);
+      transform: translateY(-18px) rotate(0.8deg);
     }
 
     66% {
-      transform: translateY(-10px) rotate(-1deg);
+      transform: translateY(-9px) rotate(-0.8deg);
     }
   }
 
@@ -657,8 +796,8 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
     }
 
     50% {
-      opacity: 0.25;
-      transform: scale(1.05);
+      opacity: 0.22;
+      transform: scale(1.04);
     }
   }
 
@@ -679,7 +818,7 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   @keyframes reveal-up {
     from {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(28px);
     }
 
     to {
@@ -695,16 +834,6 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
 
     to {
       opacity: 1;
-    }
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-
-    100% {
-      background-position: 200% 0;
     }
   }
 
@@ -730,17 +859,20 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   }
 
   .animate-reveal-up {
+    opacity: 0;
     animation: reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .animate-reveal-fade {
+    opacity: 0;
     animation: reveal-fade 1s ease forwards;
   }
 
+  /* Scroll reveal */
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(20px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .reveal.visible {
@@ -749,19 +881,293 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   }
 
   .reveal-delay-1 {
-    transition-delay: 0.1s;
+    transition-delay: 0.08s;
   }
 
   .reveal-delay-2 {
-    transition-delay: 0.2s;
+    transition-delay: 0.16s;
   }
 
   .reveal-delay-3 {
-    transition-delay: 0.3s;
+    transition-delay: 0.24s;
   }
 
   .reveal-delay-4 {
-    transition-delay: 0.4s;
+    transition-delay: 0.32s;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+
+    .animate-float,
+    .animate-float-delayed,
+    .animate-pulse-glow,
+    .animate-pulse-glow-delayed,
+    .animate-gradient,
+    .animate-reveal-up,
+    .animate-reveal-fade {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* Logo wrapper — handles dark/light favicon visibility */
+  .nav-logo-wrap {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: box-shadow 0.2s;
+    background: rgba(35, 134, 54, 0.12);
+    border: 1px solid rgba(35, 134, 54, 0.2);
+  }
+
+  html.light .nav-logo-wrap {
+    background: rgba(35, 134, 54, 0.08);
+    border-color: rgba(35, 134, 54, 0.15);
+  }
+
+  .nav-logo-wrap:hover {
+    box-shadow: 0 0 14px rgba(35, 134, 54, 0.3);
+  }
+
+  .nav-logo-img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: block;
+    /* Favicon umumnya gelap — invert di dark mode agar terlihat */
+    filter: brightness(0) invert(1);
+    transition: filter 0.25s;
+  }
+
+  html.light .nav-logo-img {
+    /* Di light mode kembalikan ke warna asli favicon */
+    filter: none;
+  }
+
+  /* Nav link states */
+  .nav-link {
+    color: #8b949e;
+    transition: color 0.15s, background-color 0.15s;
+  }
+
+  .nav-link:hover {
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.6);
+  }
+
+  html.light .nav-link {
+    color: #57606a;
+  }
+
+  html.light .nav-link:hover {
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.7);
+  }
+
+  .nav-link-active {
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.6);
+  }
+
+  html.light .nav-link-active {
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.7);
+  }
+
+  /* Nav icon button */
+  .nav-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(48, 54, 61, 0.6);
+    color: #8b949e;
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+
+  .nav-icon-btn:hover {
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.6);
+    border-color: rgba(139, 148, 158, 0.4);
+  }
+
+  html.light .nav-icon-btn {
+    border-color: rgba(208, 215, 222, 0.7);
+    color: #57606a;
+  }
+
+  html.light .nav-icon-btn:hover {
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.7);
+    border-color: rgba(140, 149, 159, 0.5);
+  }
+
+  /* Nav scrolled state */
+  .nav-scrolled {
+    background: rgba(10, 10, 15, 0.88);
+    border-color: rgba(48, 54, 61, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  html.light .nav-scrolled {
+    background: rgba(246, 248, 250, 0.92);
+    border-color: rgba(208, 215, 222, 0.6);
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    background: rgba(10, 10, 15, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: rgba(48, 54, 61, 0.5);
+  }
+
+  html.light .mobile-menu {
+    background: rgba(246, 248, 250, 0.97);
+    border-color: rgba(208, 215, 222, 0.6);
+  }
+
+  /* Social buttons */
+  .social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid rgba(48, 54, 61, 0.6);
+    color: #6e7681;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+
+  .social-btn:hover {
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.6);
+    border-color: rgba(139, 148, 158, 0.4);
+  }
+
+  html.light .social-btn {
+    border-color: rgba(208, 215, 222, 0.7);
+    color: #8c959f;
+  }
+
+  html.light .social-btn:hover {
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.7);
+    border-color: rgba(140, 149, 159, 0.5);
+  }
+
+  /* Footer */
+  .footer-heading {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #e6edf3;
+  }
+
+  html.light .footer-heading {
+    color: #1f2328;
+  }
+
+  .footer-link {
+    display: block;
+    font-size: 0.875rem;
+    color: #8b949e;
+    transition: color 0.15s;
+  }
+
+  .footer-link:hover {
+    color: #e6edf3;
+  }
+
+  html.light .footer-link {
+    color: #57606a;
+  }
+
+  html.light .footer-link:hover {
+    color: #1f2328;
+  }
+
+  /* Filter buttons (projects page) */
+  .filter-btn {
+    border-radius: 8px;
+    border: 1px solid rgba(48, 54, 61, 0.6);
+    padding: 6px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #8b949e;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover {
+    border-color: rgba(139, 148, 158, 0.5);
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.5);
+  }
+
+  html.light .filter-btn {
+    border-color: rgba(208, 215, 222, 0.8);
+    color: #57606a;
+  }
+
+  html.light .filter-btn:hover {
+    border-color: rgba(140, 149, 159, 0.6);
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.7);
+  }
+
+  .filter-btn-active {
+    border-radius: 8px;
+    border: 1px solid rgba(35, 134, 54, 0.5);
+    padding: 6px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #3fb950;
+    background: rgba(35, 134, 54, 0.1);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  html.light .filter-btn-active {
+    border-color: rgba(26, 127, 55, 0.4);
+    color: #1a7f37;
+    background: rgba(26, 127, 55, 0.08);
+  }
+
+  /* Card placeholder (no thumbnail) */
+  .project-placeholder {
+    background: rgba(22, 27, 34, 0.8);
+  }
+
+  html.light .project-placeholder {
+    background: rgba(234, 238, 242, 0.8);
+  }
+
+  .project-placeholder-text {
+    color: rgba(48, 54, 61, 0.8);
+  }
+
+  html.light .project-placeholder-text {
+    color: rgba(140, 149, 159, 0.7);
   }
 }
 
@@ -778,6 +1184,14 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
       document.documentElement.classList.remove("light");
     }
     syncIcons();
+    updateScrollbarTheme(theme);
+  }
+
+  function updateScrollbarTheme(theme) {
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "light" ? "#fafafa" : "#0a0a0f");
+    }
   }
 
   function syncIcons() {
@@ -793,7 +1207,9 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   window.toggleTheme = function () {
     var isLight = document.documentElement.classList.contains("light");
     var next = isLight ? "dark" : "light";
-    localStorage.setItem("theme", next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch (e) {}
     applyTheme(next);
   };
 
@@ -802,51 +1218,79 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
   });
 })();
 
+// Smooth scroll untuk anchor links
 document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    var target = document.querySelector(this.getAttribute("href"));
+    var href = this.getAttribute("href");
+    if (href === "#") return;
+    var target = document.querySelector(href);
     if (target) {
+      e.preventDefault();
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
 });
 
-var animateCounter = function (el) {
-  var target = parseInt(el.dataset.target);
-  var duration = 2000;
-  var step = target / (duration / 16);
-  var current = 0;
-  var timer = setInterval(function () {
-    current += step;
-    if (current >= target) {
-      current = target;
-      clearInterval(timer);
-    }
-    el.textContent = Math.floor(current).toLocaleString("id-ID");
-  }, 16);
-};
+// Scroll progress bar
+(function () {
+  var bar = document.getElementById("scroll-progress");
+  if (!bar) return;
+  function updateProgress() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = pct + "%";
+  }
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  updateProgress();
+})();
 
-var counters = document.querySelectorAll("[data-counter]");
-if (counters.length) {
+// Counter animation dengan IntersectionObserver
+(function () {
+  var counters = document.querySelectorAll("[data-counter]");
+  if (!counters.length) return;
+
   var counterObserver = new IntersectionObserver(
     function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-          counterObserver.unobserve(entry.target);
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var target = parseInt(el.dataset.target, 10);
+        var duration = 1800;
+        var startTime = null;
+        var startVal = 0;
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          var ease = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.floor(startVal + (target - startVal) * ease).toLocaleString(
+            "id-ID"
+          );
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = target.toLocaleString("id-ID");
+          }
         }
+
+        requestAnimationFrame(step);
+        counterObserver.unobserve(el);
       });
     },
     { threshold: 0.5 }
   );
+
   counters.forEach(function (counter) {
     counterObserver.observe(counter);
   });
-}
+})();
 
-var reveals = document.querySelectorAll(".reveal");
-if (reveals.length) {
+// Reveal on scroll
+(function () {
+  var reveals = document.querySelectorAll(".reveal");
+  if (!reveals.length) return;
+
   var revealObserver = new IntersectionObserver(
     function (entries) {
       entries.forEach(function (entry) {
@@ -856,23 +1300,42 @@ if (reveals.length) {
         }
       });
     },
-    { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
+    { threshold: 0.08, rootMargin: "0px 0px -48px 0px" }
   );
+
   reveals.forEach(function (el) {
     revealObserver.observe(el);
   });
-}
+})();
 
-document.addEventListener("mousemove", function (e) {
-  var blobs = document.querySelectorAll(".animate-pulse-glow, .animate-pulse-glow-delayed");
-  var x = (e.clientX / window.innerWidth - 0.5) * 20;
-  var y = (e.clientY / window.innerHeight - 0.5) * 20;
-  blobs.forEach(function (blob, i) {
-    var factor = i % 2 === 0 ? 1 : -0.6;
-    blob.style.transform = "translate(" + x * factor + "px, " + y * factor + "px)";
+// Parallax blob pada mouse move — hanya desktop
+(function () {
+  if (window.matchMedia("(hover: none)").matches) return;
+
+  var ticking = false;
+  var mouseX = 0;
+  var mouseY = 0;
+
+  document.addEventListener("mousemove", function (e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if (!ticking) {
+      requestAnimationFrame(function () {
+        var blobs = document.querySelectorAll(".animate-pulse-glow, .animate-pulse-glow-delayed");
+        var x = (mouseX / window.innerWidth - 0.5) * 18;
+        var y = (mouseY / window.innerHeight - 0.5) * 18;
+        blobs.forEach(function (blob, i) {
+          var factor = i % 2 === 0 ? 1 : -0.5;
+          blob.style.transform = "translate(" + x * factor + "px, " + y * factor + "px)";
+        });
+        ticking = false;
+      });
+      ticking = true;
+    }
   });
-});
+})();
 
+// Alpine.js contact form
 document.addEventListener("alpine:init", function () {
   Alpine.data("contactForm", function (pocketbaseUrl) {
     return {
@@ -882,12 +1345,18 @@ document.addEventListener("alpine:init", function () {
 
       validate: function () {
         this.errors = {};
-        if (!this.form.name) this.errors.name = "Nama wajib diisi";
-        if (!this.form.email || !this.form.email.includes("@"))
-          this.errors.email = "Email tidak valid";
-        if (!this.form.need_type) this.errors.need_type = "Pilih salah satu kebutuhan";
-        if (!this.form.message || this.form.message.length < 10)
+        if (!this.form.name || this.form.name.trim().length < 2) {
+          this.errors.name = "Nama minimal 2 karakter";
+        }
+        if (!this.form.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.form.email)) {
+          this.errors.email = "Alamat email tidak valid";
+        }
+        if (!this.form.need_type) {
+          this.errors.need_type = "Pilih salah satu kebutuhan";
+        }
+        if (!this.form.message || this.form.message.trim().length < 10) {
           this.errors.message = "Pesan minimal 10 karakter";
+        }
         return Object.keys(this.errors).length === 0;
       },
 
@@ -898,9 +1367,18 @@ document.addEventListener("alpine:init", function () {
           var res = await fetch(pocketbaseUrl + "/api/collections/contact_submissions/records", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(this.form),
+            body: JSON.stringify({
+              name: this.form.name.trim(),
+              email: this.form.email.trim().toLowerCase(),
+              need_type: this.form.need_type,
+              message: this.form.message.trim(),
+            }),
           });
-          this.status = res.ok ? "success" : "error";
+          if (res.ok) {
+            this.status = "success";
+          } else {
+            this.status = "error";
+          }
         } catch (e) {
           this.status = "error";
         }
@@ -1081,14 +1559,13 @@ baseURL = "https://zedlabs.id"
 defaultContentLanguage = "id"
 title = "ZEDLABS — Innovate Beyond Limits"
 theme = ""
-
 [languages]
   [languages.id]
     locale = "id"
     weight = 1
 
 [params]
-  description = "IT Consulting, Web & Mobile Development, dan SaaS solutions."
+  description = "IT Consulting, Web & Mobile Development, dan SaaS solutions untuk bisnis yang ingin tumbuh lebih cepat."
   tagline = "Innovate Beyond Limits"
   email = "hello@zedlabs.id"
   whatsapp = "+62895351856267"
@@ -1141,60 +1618,117 @@ theme = ""
 ```
 ---
 
+## layouts/404.html
+```html
+{{ define "main" }}
+<div class="min-h-screen flex items-center justify-center">
+  <div class="container-content text-center">
+    <div class="max-w-xl mx-auto">
+      <p class="font-mono text-7xl font-bold text-gradient-green">404</p>
+      <h1 class="section-title mt-6">Halaman tidak ditemukan</h1>
+      <p class="section-subtitle">
+        Sepertinya halaman yang Anda cari sudah dipindahkan, dihapus, atau tidak pernah ada.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mt-10">
+        <a href="/" class="btn-primary">Kembali ke Beranda</a>
+        <a href="/contact" class="btn-outline">Hubungi Kami</a>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}
+
+```
+---
+
 ## layouts/about/single.html
 ```html
-{{ with site.Data.team }}
-<div class="mt-24">
-  <div class="text-center mb-16">
-    <span class="section-label">Tim</span>
-    <h2 class="section-title">Orang-orang di balik ZEDLABS</h2>
-  </div>
-  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    {{ range . }}
-    <div class="glass-card p-7 text-center">
-      {{ if .avatar }}
-      <img src="{{ .avatar }}" alt="{{ .name }}"
-        class="mx-auto mb-5 h-20 w-20 rounded-full border-2 theme-border object-cover" />
-      {{ else }}
-      <div
-        class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full border-2 theme-border theme-bg-overlay font-mono text-2xl font-bold theme-text-secondary">
-        {{ substr .name 0 1 }}
+{{ define "main" }}
+<div class="pt-32 section">
+  <div class="container-content">
+
+    <div class="max-w-3xl">
+      <span class="section-label">Tentang</span>
+      <h1 class="section-title">Kami membangun sistem, bukan sekadar kode</h1>
+      <p class="section-subtitle">
+        ZEDLABS adalah tim engineers dan designers yang terobsesi dengan kualitas, keandalan, dan dampak nyata dari
+        setiap baris kode yang kami tulis.
+      </p>
+    </div>
+
+    {{ with .Content }}
+    <div class="prose-zed mt-12 max-w-3xl">{{ . }}</div>
+    {{ end }}
+
+    {{ with site.Data.team }}
+    <div class="mt-24">
+      <div class="mb-16">
+        <span class="section-label">Tim</span>
+        <h2 class="section-title">Orang-orang di balik ZEDLABS</h2>
       </div>
-      {{ end }}
-      <h3 class="font-semibold theme-text-primary text-lg">{{ .name }}</h3>
-      <p class="mt-1 text-sm theme-text-secondary">{{ .role }}</p>
-      {{ with .bio }}
-      <p class="mt-4 text-xs theme-text-muted leading-relaxed">{{ . }}</p>
-      {{ end }}
-      {{ with .skills }}
-      <div class="mt-5 flex flex-wrap justify-center gap-1.5">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {{ range . }}
-        <span class="tag text-xs">{{ . }}</span>
+        <div class="glass-card p-7">
+          {{ if .avatar }}
+          <img src="{{ .avatar }}" alt="{{ .name }}"
+            class="mb-5 h-16 w-16 rounded-full border-2 theme-border object-cover" />
+          {{ else }}
+          <div
+            class="mb-5 flex h-16 w-16 items-center justify-center rounded-full border-2 theme-border theme-bg-overlay font-mono text-xl font-bold theme-text-secondary">
+            {{ substr .name 0 1 }}
+          </div>
+          {{ end }}
+          <h3 class="font-semibold theme-text-primary text-base">{{ .name }}</h3>
+          <p class="mt-1 text-sm theme-text-secondary">{{ .role }}</p>
+          {{ with .bio }}
+          <p class="mt-4 text-sm theme-text-muted leading-relaxed">{{ . }}</p>
+          {{ end }}
+          {{ with .skills }}
+          <div class="mt-5 flex flex-wrap gap-1.5">
+            {{ range . }}
+            <span class="tag">{{ . }}</span>
+            {{ end }}
+          </div>
+          {{ end }}
+          {{ if or .linkedin .github }}
+          <div class="mt-5 flex gap-3 pt-5 border-t theme-border">
+            {{ with .linkedin }}
+            <a href="{{ . }}" target="_blank" rel="noopener noreferrer"
+              class="theme-text-muted hover:theme-text-primary transition-colors" aria-label="LinkedIn">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+            </a>
+            {{ end }}
+            {{ with .github }}
+            <a href="{{ . }}" target="_blank" rel="noopener noreferrer"
+              class="theme-text-muted hover:theme-text-primary transition-colors" aria-label="GitHub">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+              </svg>
+            </a>
+            {{ end }}
+          </div>
+          {{ end }}
+        </div>
         {{ end }}
       </div>
-      {{ end }}
-      {{ if or .linkedin .github }}
-      <div class="mt-5 flex justify-center gap-3">
-        {{ with .linkedin }}
-        <a href="{{ . }}" target="_blank" class="theme-text-muted hover:theme-text-primary transition-colors">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-          </svg>
-        </a>
-        {{ end }}
-        {{ with .github }}
-        <a href="{{ . }}" target="_blank" class="theme-text-muted hover:theme-text-primary transition-colors">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-          </svg>
-        </a>
-        {{ end }}
-      </div>
-      {{ end }}
     </div>
     {{ end }}
+
+    {{ with site.Data.partners }}
+    <div class="mt-24 border-t theme-border pt-20">
+      <p class="text-xs font-mono uppercase tracking-widest theme-text-muted mb-10">Teknologi yang kami kuasai</p>
+      <div class="flex flex-wrap gap-3">
+        {{ range . }}
+        <span class="tag text-sm px-4 py-2">{{ .name }}</span>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
   </div>
 </div>
 {{ end }}
@@ -1225,13 +1759,13 @@ theme = ""
       <a href="{{ .Permalink }}" class="card-interactive group block overflow-hidden">
         <div class="grid grid-cols-1 lg:grid-cols-2">
           {{ with .Params.thumbnail }}
-          <div class="aspect-video overflow-hidden bg-[#21262d] lg:aspect-auto">
+          <div class="aspect-video overflow-hidden project-placeholder lg:aspect-auto">
             <img src="{{ . }}" alt="{{ $.Title }}"
               class="h-full w-full object-cover opacity-80 transition-opacity group-hover:opacity-100" />
           </div>
           {{ else }}
-          <div class="hidden aspect-video items-center justify-center bg-[#161b22] lg:flex">
-            <span class="font-mono text-4xl font-bold text-[#30363d]">{{ substr .Title 0 1 }}</span>
+          <div class="hidden aspect-video items-center justify-center project-placeholder lg:flex">
+            <span class="font-mono text-4xl font-bold project-placeholder-text">{{ substr .Title 0 1 }}</span>
           </div>
           {{ end }}
           <div class="p-8 lg:p-10">
@@ -1242,13 +1776,13 @@ theme = ""
               {{ end }}
             </div>
             <h2
-              class="text-2xl font-bold text-[#e6edf3] leading-tight tracking-tight group-hover:text-[#388bfd] transition-colors">
+              class="text-2xl font-bold theme-text-primary leading-tight tracking-tight group-hover:text-[#388bfd] transition-colors">
               {{ .Title }}
             </h2>
             {{ with .Description }}
-            <p class="mt-3 text-[#8b949e] leading-relaxed">{{ . }}</p>
+            <p class="mt-3 theme-text-secondary leading-relaxed">{{ . }}</p>
             {{ end }}
-            <p class="mt-6 text-xs font-mono text-[#6e7681]">
+            <p class="mt-6 text-xs font-mono theme-text-muted">
               {{ .Date.Format "2 January 2006" }} &middot; {{ .ReadingTime }} min read
             </p>
           </div>
@@ -1265,13 +1799,13 @@ theme = ""
         {{ with .Params.category }}
         <span class="badge-blue self-start mb-4">{{ . }}</span>
         {{ end }}
-        <h2 class="font-semibold text-[#e6edf3] leading-snug group-hover:text-[#388bfd] transition-colors flex-1">
+        <h2 class="font-semibold theme-text-primary leading-snug group-hover:text-[#388bfd] transition-colors flex-1">
           {{ .Title }}
         </h2>
         {{ with .Description }}
-        <p class="mt-2 text-sm text-[#8b949e] leading-relaxed line-clamp-2">{{ . }}</p>
+        <p class="mt-2 text-sm theme-text-secondary leading-relaxed line-clamp-2">{{ . }}</p>
         {{ end }}
-        <p class="mt-5 pt-4 border-t border-[#21262d] text-xs font-mono text-[#6e7681]">
+        <p class="mt-5 pt-4 border-t theme-border text-xs font-mono theme-text-muted">
           {{ .Date.Format "2 January 2006" }} &middot; {{ .ReadingTime }} min read
         </p>
       </a>
@@ -1591,12 +2125,8 @@ theme = ""
 
             <p class="text-center text-xs text-[#6e7681]">
               Atau langsung via
-
-              href="https://wa.me/{{ .Site.Params.whatsapp }}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-[#388bfd] hover:underline"
-              >WhatsApp</a>
+              <a href="https://wa.me/{{ .Site.Params.whatsapp }}" target="_blank" rel="noopener noreferrer"
+                class="text-[#388bfd] hover:underline">WhatsApp</a>
             </p>
           </form>
         </div>
@@ -1620,6 +2150,8 @@ theme = ""
 </head>
 
 <body class="font-sans antialiased theme-bg-primary theme-text-primary">
+
+  <div id="scroll-progress" aria-hidden="true"></div>
 
   {{ partial "nav.html" . }}
 
@@ -1731,34 +2263,33 @@ theme = ""
     <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
 
       <div class="md:col-span-1">
-        <a href="/" class="flex items-center gap-2 mb-4">
-          <div class="w-8 h-8 rounded-md flex items-center justify-center font-mono font-bold text-sm text-white"
-            style="background-color: #238636;">
-            Z
+        <a href="/" class="flex items-center gap-2.5 mb-5 group" aria-label="ZEDLABS">
+          <div class="nav-logo-wrap">
+            <img src="/favicon.ico" alt="ZEDLABS" class="nav-logo-img" width="28" height="28" />
           </div>
-          <span class="font-bold theme-text-primary">ZED<span style="color: #238636;">LABS</span></span>
+          <span class="font-bold theme-text-primary">ZED<span class="text-gradient-green">LABS</span></span>
         </a>
         <p class="text-sm theme-text-secondary leading-relaxed">
           {{ .Site.Params.description }}
         </p>
-        <div class="flex gap-3 mt-5">
-          <a href="{{ .Site.Params.github }}" target="_blank"
-            class="p-2 rounded-md border theme-border theme-text-secondary hover:theme-text-primary transition-all">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <div class="flex gap-2 mt-6">
+          <a href="{{ .Site.Params.github }}" target="_blank" rel="noopener noreferrer" class="social-btn"
+            aria-label="GitHub">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path
                 d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
             </svg>
           </a>
-          <a href="{{ .Site.Params.linkedin }}" target="_blank"
-            class="p-2 rounded-md border theme-border theme-text-secondary hover:theme-text-primary transition-all">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener noreferrer" class="social-btn"
+            aria-label="LinkedIn">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path
                 d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
             </svg>
           </a>
-          <a href="https://wa.me/{{ .Site.Params.whatsapp }}" target="_blank"
-            class="p-2 rounded-md border theme-border theme-text-secondary hover:theme-text-primary transition-all">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <a href="https://wa.me/{{ .Site.Params.whatsapp }}" target="_blank" rel="noopener noreferrer"
+            class="social-btn" aria-label="WhatsApp">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path
                 d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
             </svg>
@@ -1767,42 +2298,37 @@ theme = ""
       </div>
 
       <div>
-        <h4 class="text-sm font-semibold theme-text-primary mb-4">Layanan</h4>
+        <h4 class="footer-heading">Navigasi</h4>
         <ul class="space-y-2">
           {{ range .Site.Menus.main }}
           <li>
-            <a href="{{ .URL }}" class="text-sm theme-text-secondary hover:theme-text-primary transition-colors">
-              {{ .Name }}
-            </a>
+            <a href="{{ .URL }}" class="footer-link">{{ .Name }}</a>
           </li>
           {{ end }}
         </ul>
       </div>
 
       <div>
-        <h4 class="text-sm font-semibold theme-text-primary mb-4">Perusahaan</h4>
+        <h4 class="footer-heading">Perusahaan</h4>
         <ul class="space-y-2">
-          <li><a href="/about" class="text-sm theme-text-secondary hover:theme-text-primary transition-colors">Tentang
-              Kami</a></li>
-          <li><a href="/blog" class="text-sm theme-text-secondary hover:theme-text-primary transition-colors">Blog</a>
-          </li>
-          <li><a href="/projects"
-              class="text-sm theme-text-secondary hover:theme-text-primary transition-colors">Proyek</a></li>
-          <li><a href="/contact"
-              class="text-sm theme-text-secondary hover:theme-text-primary transition-colors">Kontak</a></li>
+          <li><a href="/about" class="footer-link">Tentang Kami</a></li>
+          <li><a href="/blog" class="footer-link">Blog</a></li>
+          <li><a href="/projects" class="footer-link">Proyek</a></li>
+          <li><a href="/contact" class="footer-link">Kontak</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 class="text-sm font-semibold theme-text-primary mb-4">Kontak</h4>
-        <ul class="space-y-2 text-sm theme-text-secondary">
+        <h4 class="footer-heading">Kontak</h4>
+        <ul class="space-y-2">
           <li>
-            <a href="mailto:{{ .Site.Params.email }}" class="hover:theme-text-primary transition-colors">
+            <a href="mailto:{{ .Site.Params.email }}" class="footer-link">
               {{ .Site.Params.email }}
             </a>
           </li>
           <li>
-            <a href="https://wa.me/{{ .Site.Params.whatsapp }}" class="hover:theme-text-primary transition-colors">
+            <a href="https://wa.me/{{ .Site.Params.whatsapp }}" target="_blank" rel="noopener noreferrer"
+              class="footer-link">
               WhatsApp
             </a>
           </li>
@@ -1813,7 +2339,7 @@ theme = ""
 
     <div class="mt-12 pt-8 border-t theme-border flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-xs theme-text-muted">
-        {{ now.Year }} ZEDLABS. All rights reserved.
+        &copy; {{ now.Year }} ZEDLABS. All rights reserved.
       </p>
       <p class="text-xs theme-text-muted font-mono">
         Built with Hugo + PocketBase
@@ -1831,6 +2357,7 @@ theme = ""
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+<meta name="theme-color" content="#0a0a0f" />
 
 <title>
   {{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} &middot; {{ .Site.Title }}{{ end }}
@@ -1854,22 +2381,15 @@ theme = ""
 <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}" />
 <meta name="twitter:description"
   content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
-{{ with .Params.thumbnail }}
-<meta name="twitter:image" content="{{ . | absURL }}" />
-{{ else }}
-<meta name="twitter:image" content="{{ " og-default.png" | absURL }}" />
-{{ end }}
 
 {{ if .IsPage }}
 <meta property="article:published_time" content="{{ .Date.Format " 2006-01-02T15:04:05Z07:00" }}" />
-{{ with .Params.tags }}
-{{ range . }}
+{{ with .Params.tags }}{{ range . }}
 <meta property="article:tag" content="{{ . }}" />
-{{ end }}
-{{ end }}
+{{ end }}{{ end }}
 {{ end }}
 
-<link rel="icon" type="image/ico" href="/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1877,15 +2397,20 @@ theme = ""
   href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
   rel="stylesheet" />
 
-<link rel="stylesheet" href="/css/main.css" />
+{{ $css := resources.Get "css/main.css" }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" />
 
 <script>
   (function () {
-    var saved = localStorage.getItem("theme");
-    var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    if (saved === "light" || (!saved && !prefersDark)) {
-      document.documentElement.classList.add("light");
-    }
+    try {
+      var saved = localStorage.getItem("theme");
+      var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (saved === "light" || (!saved && !prefersDark)) {
+        document.documentElement.classList.add("light");
+      } else {
+        document.documentElement.classList.remove("light");
+      }
+    } catch (e) { }
   })();
 </script>
 
@@ -1896,36 +2421,44 @@ theme = ""
 ```html
 <header x-data="{ open: false, scrolled: false }"
   x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 20 })"
-  :class="scrolled ? 'border-b theme-border theme-bg-primary bg-opacity-90 backdrop-blur-md' : 'bg-transparent'"
-  class="fixed left-0 right-0 top-0 z-50 transition-all duration-300">
+  :class="scrolled ? 'nav-scrolled' : 'border-transparent bg-transparent'"
+  class="fixed left-0 right-0 top-0 z-50 border-b transition-all duration-300">
+
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
 
-      <a href="/" class="flex items-center gap-2">
-          <img src="/static/favicon.ico" />
-        <span class="font-bold tracking-tight theme-text-primary">
-          ZED<span style="color: #f5b157;">LABS</span>
+      <a href="/" class="flex items-center gap-2.5 group" aria-label="ZEDLABS — Beranda">
+        <div class="nav-logo-wrap">
+          <img src="/favicon.ico" alt="ZEDLABS" class="nav-logo-img" width="28" height="28" />
+        </div>
+        <span class="font-bold tracking-tight text-base theme-text-primary">
+          ZED<span class="text-gradient-green">LABS</span>
         </span>
       </a>
 
-      <nav class="hidden items-center gap-1 md:flex">
+      <nav class="hidden items-center gap-0.5 md:flex" aria-label="Navigasi utama">
+        {{ $currentPage := . }}
         {{ range .Site.Menus.main }}
-        <a href="{{ .URL }}" class="rounded-md px-3 py-1.5 text-sm theme-text-secondary transition-all duration-150 hover:theme-bg-surface
-        hover:theme-text-primary">
+        {{ $isActive := or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}
+        <a href="{{ .URL }}"
+          class="relative rounded-lg px-3 py-2 text-sm transition-all duration-150 {{ if $isActive }}nav-link-active{{ else }}nav-link{{ end }}">
           {{ .Name }}
+          {{ if $isActive }}
+          <span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+            style="background:#3fb950;"></span>
+          {{ end }}
         </a>
         {{ end }}
       </nav>
 
       <div class="hidden items-center gap-3 md:flex">
-        <button onclick="toggleTheme()"
-          class="rounded-md border p-2 transition-colors duration-150 theme-border theme-text-secondary hover:theme-text-primary hover:theme-bg-surface"
-          aria-label="Toggle theme">
-          <svg data-icon-moon class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button onclick="toggleTheme()" class="nav-icon-btn" aria-label="Ganti tema">
+          <svg data-icon-moon class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
-          <svg data-icon-sun class="h-4 w-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg data-icon-sun class="h-4 w-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
@@ -1933,19 +2466,19 @@ theme = ""
 
         <a href="/contact" class="btn-primary text-sm">
           Mulai Konsultasi
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </a>
       </div>
 
-      <button @click="open = !open"
-        class="rounded-md p-2 theme-text-secondary transition-colors hover:theme-bg-surface hover:theme-text-primary md:hidden"
-        aria-label="Toggle menu">
-        <svg x-show="!open" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button @click="open = !open" :aria-expanded="open.toString()" class="nav-icon-btn md:hidden"
+        aria-label="Buka menu">
+        <svg x-show="!open" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        <svg x-show="open" x-cloak class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg x-show="open" x-cloak class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
@@ -1953,22 +2486,18 @@ theme = ""
     </div>
   </div>
 
-  <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-150"
-    x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-    x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 translate-y-0"
-    x-transition:leave-end="opacity-0 -translate-y-1"
-    class="border-t theme-border theme-bg-primary bg-opacity-95 backdrop-blur-md md:hidden">
-    <div class="space-y-1 px-4 py-4">
+  <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 -translate-y-2" class="mobile-menu border-t md:hidden" aria-label="Menu mobile">
+    <div class="space-y-0.5 px-4 py-3">
       {{ range .Site.Menus.main }}
-      <a href="{{ .URL }}" @click="open = false" class="block rounded-md px-3 py-2 text-sm theme-text-secondary transition-colors hover:theme-bg-surface
-      hover:theme-text-primary">
+      <a href="{{ .URL }}" @click="open = false" class="nav-link flex items-center rounded-lg px-3 py-2.5 text-sm">
         {{ .Name }}
       </a>
       {{ end }}
-      <div class="border-t theme-border pt-3 flex items-center gap-3">
-        <button onclick="toggleTheme()"
-          class="rounded-md border p-2 transition-colors theme-border theme-text-secondary hover:theme-text-primary hover:theme-bg-surface"
-          aria-label="Toggle theme">
+      <div class="border-t theme-border mt-3 pt-3 flex items-center gap-3">
+        <button onclick="toggleTheme()" class="nav-icon-btn" aria-label="Ganti tema">
           <svg data-icon-moon class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
@@ -1978,7 +2507,7 @@ theme = ""
               d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
         </button>
-        <a href="/contact" class="btn-primary flex-1 justify-center">
+        <a href="/contact" class="btn-primary flex-1 justify-center text-sm">
           Mulai Konsultasi
         </a>
       </div>
@@ -2085,28 +2614,20 @@ theme = ""
 
 <section class="relative min-h-screen flex items-center overflow-hidden noise-bg">
 
-  <div class="absolute inset-0"
-    style="background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(35,134,54,0.12) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, rgba(31,111,235,0.08) 0%, transparent 50%), #0a0a0f;">
+  <div class="absolute inset-0 hero-bg-dark">
   </div>
 
-  <html:light-bg class="absolute inset-0 hidden"
-    style="background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(26,127,55,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, rgba(9,105,218,0.06) 0%, transparent 50%), #fafafa;"></html:light-bg>
+  <div class="absolute inset-0 hero-bg-light hidden">
+  </div>
 
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
     <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full animate-pulse-glow"
       style="background: radial-gradient(circle, rgba(35,134,54,0.15) 0%, transparent 70%);"></div>
     <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full animate-pulse-glow-delayed"
-      style="background: radial-gradient(circle, rgba(31,111,235,0.12) 0%, transparent 70%);"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
-      style="background: radial-gradient(circle, rgba(56,139,253,0.03) 0%, transparent 70%);"></div>
+      style="background: radial-gradient(circle, rgba(31,111,235,0.10) 0%, transparent 70%);"></div>
   </div>
 
-  <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute inset-0"
-      style="background-image: linear-gradient(rgba(56,139,253,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(56,139,253,0.03) 1px, transparent 1px); background-size: 80px 80px;">
-    </div>
-    <div class="absolute inset-0" style="background: linear-gradient(to bottom, transparent 60%, #0a0a0f 100%);"></div>
-  </div>
+  <div class="absolute inset-0 pointer-events-none hero-grid" aria-hidden="true"></div>
 
   <div class="relative container-content section pt-32 pb-20">
     <div class="max-w-5xl">
@@ -2115,7 +2636,7 @@ theme = ""
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-8"
           style="border-color: rgba(35,134,54,0.3); background: rgba(35,134,54,0.08); backdrop-filter: blur(12px);">
           <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background: #3fb950;"></span>
-          <span class="text-xs font-mono" style="color: #3fb950;">Innovate Beyond Limits</span>
+          <span class="text-xs font-mono" style="color: #3fb950;">Open for projects — 2026</span>
         </div>
       </div>
 
@@ -2133,7 +2654,7 @@ theme = ""
       <div class="flex flex-wrap gap-4 mt-12 animate-reveal-up" style="animation-delay: 0.3s;">
         <a href="{{ $hero.cta_primary.url }}" class="btn-primary px-8 py-4 text-base">
           {{ $hero.cta_primary.label }}
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </a>
@@ -2142,22 +2663,22 @@ theme = ""
         </a>
       </div>
 
-      <div class="flex flex-wrap gap-2 mt-16 animate-reveal-up" style="animation-delay: 0.4s;">
-        {{ range slice "Go" "Hugo" "PocketBase" "PostgreSQL" "React" "Flutter" "Tailwind" "Docker" }}
-        <span class="tag">{{ . }}</span>
-        {{ end }}
+      <div class="mt-16 animate-reveal-up" style="animation-delay: 0.4s;">
+        <p class="text-xs font-mono theme-text-muted mb-4 uppercase tracking-widest">Tech Stack</p>
+        <div class="flex flex-wrap gap-2">
+          {{ range slice "Go" "Hugo" "PocketBase" "PostgreSQL" "React" "Flutter" "Tailwind" "Docker" "Cloudflare" }}
+          <span class="tag">{{ . }}</span>
+          {{ end }}
+        </div>
       </div>
 
     </div>
   </div>
 
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-reveal-fade"
-    style="animation-delay: 1s;">
+    style="animation-delay: 1s;" aria-hidden="true">
     <span class="text-xs font-mono theme-text-muted">scroll</span>
-    <div class="w-px h-10 relative overflow-hidden" style="background: rgba(110,118,129,0.2);">
-      <div class="absolute top-0 left-0 w-full h-1/2 animate-gradient"
-        style="background: linear-gradient(to bottom, transparent, #3fb950, transparent); animation-duration: 2s;">
-      </div>
+    <div class="w-px h-10 relative overflow-hidden scroll-line">
     </div>
   </div>
 
@@ -2314,24 +2835,24 @@ theme = ""
       {{ range .Pages }}
       <a href="{{ .Permalink }}" class="card-interactive group flex flex-col overflow-hidden">
         {{ with index .Params.screenshots 0 }}
-        <div class="aspect-video overflow-hidden bg-[#21262d]">
+        <div class="aspect-video overflow-hidden project-placeholder">
           <img src="{{ . }}" alt="{{ $.Title }}"
             class="h-full w-full object-cover opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105" />
         </div>
         {{ else }}
-        <div class="flex aspect-video items-center justify-center bg-[#21262d]">
-          <span class="font-mono text-3xl font-bold text-[#30363d]">{{ substr .Title 0 1 }}</span>
+        <div class="flex aspect-video items-center justify-center project-placeholder">
+          <span class="font-mono text-3xl font-bold project-placeholder-text">{{ substr .Title 0 1 }}</span>
         </div>
         {{ end }}
         <div class="flex flex-1 flex-col p-6">
           {{ with .Params.category }}
           <span class="badge-purple self-start mb-3">{{ . }}</span>
           {{ end }}
-          <h2 class="font-semibold text-[#e6edf3] leading-snug group-hover:text-[#388bfd] transition-colors">
+          <h2 class="font-semibold theme-text-primary leading-snug group-hover:text-[#388bfd] transition-colors">
             {{ .Title }}
           </h2>
           {{ with .Description }}
-          <p class="mt-2 text-sm text-[#8b949e] leading-relaxed flex-1">{{ . }}</p>
+          <p class="mt-2 text-sm theme-text-secondary leading-relaxed flex-1">{{ . }}</p>
           {{ end }}
         </div>
       </a>
@@ -2426,9 +2947,9 @@ theme = ""
       <div class="flex flex-wrap gap-2 mb-10">
         <template x-for="cat in categories" :key="cat">
           <button @click="active = cat" :class="active === cat
-              ? 'border-[#238636] bg-[#0f2d1a] text-[#3fb950]'
-              : 'border-[#30363d] text-[#8b949e] hover:border-[#8b949e] hover:text-[#e6edf3]'"
-            class="rounded-md border px-4 py-1.5 text-sm font-medium transition-all duration-150" x-text="cat"></button>
+              ? 'filter-btn-active'
+              : 'filter-btn'" x-text="cat">
+          </button>
         </template>
       </div>
 
@@ -2439,27 +2960,27 @@ theme = ""
           x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95"
           x-transition:enter-end="opacity-100 scale-100" class="card-interactive group flex flex-col overflow-hidden">
           {{ with .Params.thumbnail }}
-          <div class="aspect-video overflow-hidden bg-[#21262d]">
+          <div class="aspect-video overflow-hidden project-placeholder">
             <img src="{{ . }}" alt="{{ $.Title }}"
               class="h-full w-full object-cover opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105" />
           </div>
           {{ else }}
-          <div class="flex aspect-video items-center justify-center bg-[#21262d]">
-            <span class="font-mono text-3xl font-bold text-[#30363d]">{{ substr .Title 0 1 }}</span>
+          <div class="flex aspect-video items-center justify-center project-placeholder">
+            <span class="font-mono text-3xl font-bold project-placeholder-text">{{ substr .Title 0 1 }}</span>
           </div>
           {{ end }}
           <div class="flex flex-1 flex-col p-6">
             {{ with .Params.category }}
             <span class="badge-blue self-start mb-3">{{ . }}</span>
             {{ end }}
-            <h2 class="font-semibold text-[#e6edf3] leading-snug group-hover:text-[#388bfd] transition-colors">
+            <h2 class="font-semibold theme-text-primary leading-snug group-hover:text-[#388bfd] transition-colors">
               {{ .Title }}
             </h2>
             {{ with .Description }}
-            <p class="mt-2 text-sm text-[#8b949e] leading-relaxed flex-1">{{ . }}</p>
+            <p class="mt-2 text-sm theme-text-secondary leading-relaxed flex-1">{{ . }}</p>
             {{ end }}
             {{ with .Params.tech_stack }}
-            <div class="mt-5 flex flex-wrap gap-1.5 pt-4 border-t border-[#21262d]">
+            <div class="mt-5 flex flex-wrap gap-1.5 pt-4 border-t theme-border">
               {{ range first 4 . }}
               <span class="tag">{{ . }}</span>
               {{ end }}
@@ -2595,16 +3116,16 @@ theme = ""
         <span class="text-3xl mb-4">{{ . }}</span>
         {{ end }}
         {{ with .Params.badge }}
-        <span class="badge-{{ $.Params.badge_color | default " blue" }} self-start mb-3">{{ . }}</span>
+        <span class="badge-blue self-start mb-3">{{ . }}</span>
         {{ end }}
-        <h2 class="text-lg font-semibold text-[#e6edf3] group-hover:text-[#388bfd] transition-colors">
+        <h2 class="text-lg font-semibold theme-text-primary group-hover:text-[#388bfd] transition-colors">
           {{ .Title }}
         </h2>
         {{ with .Description }}
-        <p class="mt-2 text-sm text-[#8b949e] leading-relaxed flex-1">{{ . }}</p>
+        <p class="mt-2 text-sm theme-text-secondary leading-relaxed flex-1">{{ . }}</p>
         {{ end }}
         <div
-          class="mt-6 flex items-center gap-1 pt-4 border-t border-[#21262d] text-sm text-[#8b949e] group-hover:text-[#388bfd] transition-colors">
+          class="mt-6 flex items-center gap-1 pt-4 border-t theme-border text-sm theme-text-secondary group-hover:text-[#388bfd] transition-colors">
           Pelajari lebih lanjut
           <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
             viewBox="0 0 24 24">
@@ -2757,6 +3278,7 @@ allowBuilds:
     --radius-3xl: 1.5rem;
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --animate-spin: spin 1s linear infinite;
     --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     --blur-md: 12px;
@@ -3118,6 +3640,9 @@ allowBuilds:
   .aspect-video {
     aspect-ratio: var(--aspect-video);
   }
+  .h-1 {
+    height: var(--spacing);
+  }
   .h-1\.5 {
     height: calc(var(--spacing) * 1.5);
   }
@@ -3177,6 +3702,9 @@ allowBuilds:
   }
   .min-h-screen {
     min-height: 100vh;
+  }
+  .w-1 {
+    width: var(--spacing);
   }
   .w-1\.5 {
     width: calc(var(--spacing) * 1.5);
@@ -3278,6 +3806,10 @@ allowBuilds:
     --tw-translate-y: calc(calc(1 / 2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
+  .-translate-y-2 {
+    --tw-translate-y: calc(var(--spacing) * -2);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
   .translate-y-0 {
     --tw-translate-y: 0;
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -3352,6 +3884,9 @@ allowBuilds:
   .justify-center {
     justify-content: center;
   }
+  .gap-0\.5 {
+    gap: calc(var(--spacing) * 0.5);
+  }
   .gap-1 {
     gap: var(--spacing);
   }
@@ -3360,6 +3895,9 @@ allowBuilds:
   }
   .gap-2 {
     gap: calc(var(--spacing) * 2);
+  }
+  .gap-2\.5 {
+    gap: calc(var(--spacing) * 2.5);
   }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
@@ -3384,6 +3922,13 @@ allowBuilds:
   }
   .gap-20 {
     gap: calc(var(--spacing) * 20);
+  }
+  .space-y-0\.5 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 0.5) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 0.5) * calc(1 - var(--tw-space-y-reverse)));
+    }
   }
   .space-y-1 {
     :where(& > :not(:last-child)) {
@@ -3460,6 +4005,10 @@ allowBuilds:
   .rounded-xl {
     border-radius: var(--radius-xl);
   }
+  .rounded-r-lg {
+    border-top-right-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
@@ -3508,23 +4057,17 @@ allowBuilds:
       border-color: color-mix(in oklab, var(--color-red-900) 50%, transparent);
     }
   }
-  .bg-\[\#0d1117\] {
-    background-color: #0d1117;
+  .border-transparent {
+    border-color: transparent;
   }
   .bg-\[\#0f2d1a\] {
     background-color: #0f2d1a;
-  }
-  .bg-\[\#1f6feb\] {
-    background-color: #1f6feb;
   }
   .bg-\[\#161b22\] {
     background-color: #161b22;
   }
   .bg-\[\#21262d\] {
     background-color: #21262d;
-  }
-  .bg-\[\#238636\] {
-    background-color: #238636;
   }
   .bg-\[\#238636\]\/10 {
     background-color: color-mix(in oklab, #238636 10%, transparent);
@@ -3545,10 +4088,6 @@ allowBuilds:
     --tw-gradient-position: to bottom in oklab;
     background-image: linear-gradient(var(--tw-gradient-stops));
   }
-  .from-\[\#6e7681\] {
-    --tw-gradient-from: #6e7681;
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
   .from-transparent {
     --tw-gradient-from: transparent;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
@@ -3557,10 +4096,6 @@ allowBuilds:
     --tw-gradient-via: transparent;
     --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);
     --tw-gradient-stops: var(--tw-gradient-via-stops);
-  }
-  .to-\[\#0d1117\] {
-    --tw-gradient-to: #0d1117;
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .to-transparent {
     --tw-gradient-to: transparent;
@@ -3601,6 +4136,9 @@ allowBuilds:
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
+  }
+  .px-2\.5 {
+    padding-inline: calc(var(--spacing) * 2.5);
   }
   .px-3 {
     padding-inline: calc(var(--spacing) * 3);
@@ -3652,6 +4190,9 @@ allowBuilds:
   }
   .py-20 {
     padding-block: calc(var(--spacing) * 20);
+  }
+  .py-24 {
+    padding-block: calc(var(--spacing) * 24);
   }
   .pt-3 {
     padding-top: calc(var(--spacing) * 3);
@@ -3713,6 +4254,10 @@ allowBuilds:
   .text-5xl {
     font-size: var(--text-5xl);
     line-height: var(--tw-leading, var(--text-5xl--line-height));
+  }
+  .text-7xl {
+    font-size: var(--text-7xl);
+    line-height: var(--tw-leading, var(--text-7xl--line-height));
   }
   .text-base {
     font-size: var(--text-base);
@@ -3790,9 +4335,6 @@ allowBuilds:
   }
   .text-\[\#e6edf3\] {
     color: #e6edf3;
-  }
-  .text-\[\#f0883e\] {
-    color: #f0883e;
   }
   .text-red-400 {
     color: var(--color-red-400);
@@ -3905,6 +4447,10 @@ allowBuilds:
     --tw-ease: var(--ease-in);
     transition-timing-function: var(--ease-in);
   }
+  .ease-in-out {
+    --tw-ease: var(--ease-in-out);
+    transition-timing-function: var(--ease-in-out);
+  }
   .ease-out {
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
@@ -3998,6 +4544,12 @@ allowBuilds:
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
   }
+  .focus-visible\:ring-offset-2 {
+    &:focus-visible {
+      --tw-ring-offset-width: 2px;
+      --tw-ring-offset-shadow: var(--tw-ring-inset,) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    }
+  }
   .focus-visible\:outline-none {
     &:focus-visible {
       --tw-outline-style: none;
@@ -4012,11 +4564,6 @@ allowBuilds:
   .sm\:grid-cols-3 {
     @media (width >= 40rem) {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  .sm\:grid-cols-4 {
-    @media (width >= 40rem) {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
   .sm\:flex-row {
@@ -4123,6 +4670,12 @@ allowBuilds:
       padding-inline: calc(var(--spacing) * 8);
     }
   }
+  .lg\:text-5xl {
+    @media (width >= 64rem) {
+      font-size: var(--text-5xl);
+      line-height: var(--tw-leading, var(--text-5xl--line-height));
+    }
+  }
   .lg\:text-7xl {
     @media (width >= 64rem) {
       font-size: var(--text-7xl);
@@ -4149,11 +4702,11 @@ allowBuilds:
     background-color: #0a0a0f;
     color: #e6edf3;
     font-family: var(--font-sans);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
     overflow-x: hidden;
   }
   html.light body {
-    background-color: #fafafa;
+    background-color: #f6f8fa;
     color: #1f2328;
   }
   ::selection {
@@ -4163,19 +4716,20 @@ allowBuilds:
   :focus-visible {
     outline: 2px solid #238636;
     outline-offset: 2px;
+    border-radius: 4px;
   }
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: #0a0a0f;
-  }
-  html.light ::-webkit-scrollbar-track {
-    background: #fafafa;
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #30363d;
-    border-radius: 3px;
+    background: rgba(48, 54, 61, 0.8);
+    border-radius: 99px;
+  }
+  html.light ::-webkit-scrollbar-thumb {
+    background: rgba(208, 215, 222, 0.8);
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #8b949e;
@@ -4197,6 +4751,70 @@ allowBuilds:
     padding-block: calc(var(--spacing) * 24);
     @media (width >= 40rem) {
       padding-block: calc(var(--spacing) * 32);
+    }
+  }
+  #scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    z-index: 9999;
+    background: linear-gradient(90deg, #238636, #3fb950, #79c0ff);
+    transition: width 0.1s linear;
+    pointer-events: none;
+  }
+  .nav-scrolled {
+    background: rgba(10, 10, 15, 0.85);
+    border-color: rgba(48, 54, 61, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  html.light .nav-scrolled {
+    background: rgba(246, 248, 250, 0.88);
+    border-color: rgba(208, 215, 222, 0.5);
+  }
+  .nav-active {
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.6);
+  }
+  html.light .nav-active {
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.6);
+  }
+  .hero-bg-dark {
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(35, 134, 54, 0.12) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, rgba(31, 111, 235, 0.08) 0%, transparent 50%), #0a0a0f;
+  }
+  html.light .hero-bg-dark {
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(26, 127, 55, 0.07) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, rgba(9, 105, 218, 0.05) 0%, transparent 50%), #f6f8fa;
+  }
+  .hero-grid {
+    background-image: linear-gradient(rgba(56, 139, 253, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(56, 139, 253, 0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 70%, transparent 100%);
+  }
+  html.light .hero-grid {
+    background-image: linear-gradient(rgba(9, 105, 218, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(9, 105, 218, 0.04) 1px, transparent 1px);
+  }
+  .scroll-line {
+    background: rgba(110, 118, 129, 0.2);
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent, #3fb950, transparent);
+    animation: scroll-line-move 2s ease-in-out infinite;
+  }
+  @keyframes scroll-line-move {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(300%);
     }
   }
   .section-label {
@@ -4257,7 +4875,7 @@ allowBuilds:
     color: #8b949e;
   }
   html.light .section-subtitle {
-    color: #656d76;
+    color: #57606a;
   }
   .btn-primary {
     position: relative;
@@ -4279,25 +4897,17 @@ allowBuilds:
     --tw-duration: 200ms;
     transition-duration: 200ms;
     &:focus-visible {
-      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-    &:focus-visible {
-      --tw-ring-offset-width: 2px;
-      --tw-ring-offset-shadow: var(--tw-ring-inset,) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    }
-    &:focus-visible {
       --tw-outline-style: none;
       outline-style: none;
     }
     background: linear-gradient(135deg, #238636, #1a7f37);
-    box-shadow: 0 0 20px rgba(35, 134, 54, 0.3);
+    box-shadow: 0 0 20px rgba(35, 134, 54, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   .btn-primary::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent);
     opacity: 0;
     transition: opacity 0.2s;
   }
@@ -4305,11 +4915,12 @@ allowBuilds:
     opacity: 1;
   }
   .btn-primary:hover {
-    box-shadow: 0 0 30px rgba(35, 134, 54, 0.5);
+    box-shadow: 0 0 32px rgba(35, 134, 54, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     transform: translateY(-1px);
   }
   .btn-primary:active {
     transform: translateY(0);
+    box-shadow: 0 0 16px rgba(35, 134, 54, 0.3);
   }
   .btn-outline {
     position: relative;
@@ -4337,22 +4948,25 @@ allowBuilds:
     }
     border-color: rgba(48, 54, 61, 0.8);
     color: #e6edf3;
-    background: rgba(22, 27, 34, 0.5);
+    background: rgba(22, 27, 34, 0.4);
     backdrop-filter: blur(12px);
   }
   .btn-outline:hover {
-    border-color: rgba(139, 148, 158, 0.6);
-    background: rgba(33, 38, 45, 0.8);
+    border-color: rgba(139, 148, 158, 0.5);
+    background: rgba(33, 38, 45, 0.7);
     transform: translateY(-1px);
   }
+  .btn-outline:active {
+    transform: translateY(0);
+  }
   html.light .btn-outline {
-    border-color: rgba(208, 215, 222, 0.8);
+    border-color: rgba(208, 215, 222, 0.9);
     color: #1f2328;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.6);
   }
   html.light .btn-outline:hover {
-    border-color: rgba(140, 149, 159, 0.6);
-    background: rgba(246, 248, 250, 0.8);
+    border-color: rgba(140, 149, 159, 0.7);
+    background: rgba(246, 248, 250, 0.9);
   }
   .btn-secondary {
     display: inline-flex;
@@ -4389,7 +5003,7 @@ allowBuilds:
     border-color: rgba(208, 215, 222, 0.5);
   }
   html.light .btn-secondary:hover {
-    background: rgba(234, 238, 242, 0.8);
+    background: rgba(234, 238, 242, 0.9);
   }
   .btn-ghost {
     display: inline-flex;
@@ -4413,44 +5027,51 @@ allowBuilds:
     background: rgba(22, 27, 34, 0.6);
     color: #e6edf3;
   }
+  html.light .btn-ghost:hover {
+    background: rgba(234, 238, 242, 0.6);
+    color: #1f2328;
+  }
   .glass-card {
     position: relative;
     overflow: hidden;
     border-radius: var(--radius-2xl);
     border-style: var(--tw-border-style);
     border-width: 1px;
-    border-color: rgba(48, 54, 61, 0.6);
+    border-color: rgba(48, 54, 61, 0.5);
     background: rgba(22, 27, 34, 0.4);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
   html.light .glass-card {
     border-color: rgba(208, 215, 222, 0.6);
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
   }
   .glass-card::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
     pointer-events: none;
   }
   html.light .glass-card::before {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, transparent 60%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, transparent 60%);
   }
   .card {
     border-radius: var(--radius-2xl);
     border-style: var(--tw-border-style);
     border-width: 1px;
-    border-color: rgba(48, 54, 61, 0.6);
+    border-color: rgba(48, 54, 61, 0.5);
     background: rgba(22, 27, 34, 0.6);
   }
   html.light .card {
     border-color: rgba(208, 215, 222, 0.6);
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
   .card-interactive {
     position: relative;
+    cursor: pointer;
     overflow: hidden;
     border-radius: var(--radius-2xl);
     border-style: var(--tw-border-style);
@@ -4460,7 +5081,7 @@ allowBuilds:
     transition-duration: var(--tw-duration, var(--default-transition-duration));
     --tw-duration: 300ms;
     transition-duration: 300ms;
-    border-color: rgba(48, 54, 61, 0.6);
+    border-color: rgba(48, 54, 61, 0.5);
     background: rgba(22, 27, 34, 0.4);
     backdrop-filter: blur(12px);
   }
@@ -4468,26 +5089,30 @@ allowBuilds:
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(56, 139, 253, 0.05), transparent);
+    background: linear-gradient(135deg, rgba(56, 139, 253, 0.04), transparent);
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
   }
   .card-interactive:hover {
-    border-color: rgba(56, 139, 253, 0.4);
-    box-shadow: 0 0 0 1px rgba(56, 139, 253, 0.2), 0 8px 32px rgba(56, 139, 253, 0.1);
-    transform: translateY(-2px);
+    border-color: rgba(56, 139, 253, 0.35);
+    box-shadow: 0 0 0 1px rgba(56, 139, 253, 0.15), 0 8px 32px rgba(56, 139, 253, 0.08);
+    transform: translateY(-3px);
   }
   .card-interactive:hover::before {
     opacity: 1;
   }
+  .card-interactive:active {
+    transform: translateY(-1px);
+  }
   html.light .card-interactive {
-    border-color: rgba(208, 215, 222, 0.6);
-    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(208, 215, 222, 0.7);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
   html.light .card-interactive:hover {
-    border-color: rgba(9, 105, 218, 0.4);
-    box-shadow: 0 0 0 1px rgba(9, 105, 218, 0.2), 0 8px 32px rgba(9, 105, 218, 0.08);
+    border-color: rgba(9, 105, 218, 0.3);
+    box-shadow: 0 0 0 1px rgba(9, 105, 218, 0.15), 0 8px 32px rgba(9, 105, 218, 0.07);
   }
   .badge-purple {
     display: inline-flex;
@@ -4501,14 +5126,14 @@ allowBuilds:
     line-height: var(--tw-leading, var(--text-xs--line-height));
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
-    border-color: rgba(61, 36, 117, 0.6);
-    background: rgba(45, 28, 92, 0.4);
+    border-color: rgba(61, 36, 117, 0.5);
+    background: rgba(45, 28, 92, 0.35);
     color: #a371f7;
     backdrop-filter: blur(8px);
   }
   html.light .badge-purple {
-    border-color: rgba(130, 80, 223, 0.3);
-    background: rgba(251, 239, 255, 0.8);
+    border-color: rgba(130, 80, 223, 0.25);
+    background: rgba(251, 239, 255, 0.85);
     color: #6639ba;
   }
   .badge-blue {
@@ -4523,14 +5148,14 @@ allowBuilds:
     line-height: var(--tw-leading, var(--text-xs--line-height));
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
-    border-color: rgba(17, 88, 199, 0.6);
-    background: rgba(12, 45, 107, 0.4);
+    border-color: rgba(17, 88, 199, 0.5);
+    background: rgba(12, 45, 107, 0.35);
     color: #388bfd;
     backdrop-filter: blur(8px);
   }
   html.light .badge-blue {
-    border-color: rgba(9, 105, 218, 0.3);
-    background: rgba(221, 244, 255, 0.8);
+    border-color: rgba(9, 105, 218, 0.25);
+    background: rgba(221, 244, 255, 0.85);
     color: #0550ae;
   }
   .badge-green {
@@ -4545,14 +5170,14 @@ allowBuilds:
     line-height: var(--tw-leading, var(--text-xs--line-height));
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
-    border-color: rgba(35, 134, 54, 0.6);
-    background: rgba(15, 45, 26, 0.4);
+    border-color: rgba(35, 134, 54, 0.5);
+    background: rgba(15, 45, 26, 0.35);
     color: #3fb950;
     backdrop-filter: blur(8px);
   }
   html.light .badge-green {
-    border-color: rgba(26, 127, 55, 0.3);
-    background: rgba(218, 251, 225, 0.8);
+    border-color: rgba(26, 127, 55, 0.25);
+    background: rgba(218, 251, 225, 0.85);
     color: #116329;
   }
   .badge-orange {
@@ -4567,14 +5192,14 @@ allowBuilds:
     line-height: var(--tw-leading, var(--text-xs--line-height));
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
-    border-color: rgba(155, 79, 18, 0.6);
-    background: rgba(45, 26, 10, 0.4);
+    border-color: rgba(155, 79, 18, 0.5);
+    background: rgba(45, 26, 10, 0.35);
     color: #f0883e;
     backdrop-filter: blur(8px);
   }
   html.light .badge-orange {
-    border-color: rgba(188, 76, 0, 0.3);
-    background: rgba(255, 241, 229, 0.8);
+    border-color: rgba(188, 76, 0, 0.25);
+    background: rgba(255, 241, 229, 0.85);
     color: #953800;
   }
   .tag {
@@ -4599,11 +5224,16 @@ allowBuilds:
   .tag:hover {
     border-color: rgba(139, 148, 158, 0.4);
     color: #8b949e;
+    background: rgba(33, 38, 45, 0.5);
   }
   html.light .tag {
-    border-color: rgba(208, 215, 222, 0.6);
-    background: rgba(246, 248, 250, 0.6);
+    border-color: rgba(208, 215, 222, 0.7);
+    background: rgba(246, 248, 250, 0.7);
     color: #57606a;
+  }
+  html.light .tag:hover {
+    border-color: rgba(140, 149, 159, 0.5);
+    color: #424a53;
   }
   .text-gradient-green {
     background: linear-gradient(135deg, #3fb950 0%, #238636 50%, #1a7f37 100%);
@@ -4629,13 +5259,61 @@ allowBuilds:
   .glow-blue {
     box-shadow: 0 0 40px rgba(31, 111, 235, 0.15);
   }
+  .theme-bg-primary {
+    background-color: #0a0a0f;
+  }
+  html.light .theme-bg-primary {
+    background-color: #f6f8fa;
+  }
+  .theme-bg-surface {
+    background-color: rgba(22, 27, 34, 0.6);
+  }
+  html.light .theme-bg-surface {
+    background-color: rgba(246, 248, 250, 0.7);
+  }
+  .theme-bg-overlay {
+    background-color: rgba(33, 38, 45, 0.6);
+  }
+  html.light .theme-bg-overlay {
+    background-color: rgba(234, 238, 242, 0.7);
+  }
+  .theme-border {
+    border-color: rgba(48, 54, 61, 0.6);
+  }
+  html.light .theme-border {
+    border-color: rgba(208, 215, 222, 0.7);
+  }
+  .theme-border-muted {
+    border-color: rgba(33, 38, 45, 0.6);
+  }
+  html.light .theme-border-muted {
+    border-color: rgba(234, 238, 242, 0.7);
+  }
+  .theme-text-primary {
+    color: #e6edf3;
+  }
+  html.light .theme-text-primary {
+    color: #1f2328;
+  }
+  .theme-text-secondary {
+    color: #8b949e;
+  }
+  html.light .theme-text-secondary {
+    color: #57606a;
+  }
+  .theme-text-muted {
+    color: #6e7681;
+  }
+  html.light .theme-text-muted {
+    color: #8c959f;
+  }
   .prose-zed {
     --tw-leading: var(--leading-relaxed);
     line-height: var(--leading-relaxed);
     color: #8b949e;
   }
   html.light .prose-zed {
-    color: #656d76;
+    color: #57606a;
   }
   .prose-zed h2 {
     margin-top: calc(var(--spacing) * 10);
@@ -4678,6 +5356,9 @@ allowBuilds:
   html.light .prose-zed a {
     color: #0969da;
   }
+  html.light .prose-zed a:hover {
+    color: #0550ae;
+  }
   .prose-zed ul {
     margin-top: calc(var(--spacing) * 4);
     list-style-type: disc;
@@ -4712,9 +5393,9 @@ allowBuilds:
     border-color: rgba(48, 54, 61, 0.6);
   }
   html.light .prose-zed code {
-    background: rgba(246, 248, 250, 0.8);
+    background: rgba(246, 248, 250, 0.9);
     color: #953800;
-    border-color: rgba(208, 215, 222, 0.6);
+    border-color: rgba(208, 215, 222, 0.7);
   }
   .prose-zed pre {
     margin-top: calc(var(--spacing) * 4);
@@ -4724,12 +5405,12 @@ allowBuilds:
     border-width: 1px;
     padding: calc(var(--spacing) * 6);
     border-color: rgba(48, 54, 61, 0.6);
-    background: rgba(13, 17, 23, 0.8);
+    background: rgba(13, 17, 23, 0.9);
     backdrop-filter: blur(12px);
   }
   html.light .prose-zed pre {
-    border-color: rgba(208, 215, 222, 0.6);
-    background: rgba(246, 248, 250, 0.8);
+    border-color: rgba(208, 215, 222, 0.7);
+    background: rgba(246, 248, 250, 0.95);
   }
   .prose-zed pre code {
     border-style: var(--tw-border-style);
@@ -4737,6 +5418,9 @@ allowBuilds:
     background-color: transparent;
     padding: 0;
     color: #e6edf3;
+  }
+  html.light .prose-zed pre code {
+    color: #1f2328;
   }
   .prose-zed blockquote {
     margin-top: calc(var(--spacing) * 4);
@@ -4763,6 +5447,9 @@ allowBuilds:
     border-width: 1px;
     border-color: rgba(48, 54, 61, 0.6);
   }
+  html.light .prose-zed img {
+    border-color: rgba(208, 215, 222, 0.7);
+  }
   .prose-zed table {
     margin-top: calc(var(--spacing) * 6);
     width: 100%;
@@ -4783,7 +5470,7 @@ allowBuilds:
   }
   html.light .prose-zed th {
     color: #1f2328;
-    border-color: rgba(208, 215, 222, 0.6);
+    border-color: rgba(208, 215, 222, 0.7);
   }
   .prose-zed td {
     border-bottom-style: var(--tw-border-style);
@@ -4794,8 +5481,8 @@ allowBuilds:
     border-color: rgba(33, 38, 45, 0.6);
   }
   html.light .prose-zed td {
-    color: #656d76;
-    border-color: rgba(234, 238, 242, 0.6);
+    color: #57606a;
+    border-color: rgba(234, 238, 242, 0.7);
   }
   .input {
     width: 100%;
@@ -4812,15 +5499,11 @@ allowBuilds:
     --tw-duration: 200ms;
     transition-duration: 200ms;
     &:focus {
-      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-    &:focus {
       --tw-outline-style: none;
       outline-style: none;
     }
     border-color: rgba(48, 54, 61, 0.6);
-    background: rgba(13, 17, 23, 0.6);
+    background: rgba(13, 17, 23, 0.5);
     color: #e6edf3;
     backdrop-filter: blur(12px);
   }
@@ -4828,23 +5511,22 @@ allowBuilds:
     color: #6e7681;
   }
   .input:focus {
-    border-color: rgba(56, 139, 253, 0.6);
-    background: rgba(13, 17, 23, 0.8);
-    --tw-ring-color: rgba(56, 139, 253, 0.2);
-    box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.15);
+    border-color: rgba(56, 139, 253, 0.5);
+    background: rgba(13, 17, 23, 0.7);
+    box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.12);
   }
   html.light .input {
-    border-color: rgba(208, 215, 222, 0.8);
-    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(208, 215, 222, 0.9);
+    background: rgba(255, 255, 255, 0.85);
     color: #1f2328;
   }
   html.light .input::placeholder {
     color: #8c959f;
   }
   html.light .input:focus {
-    border-color: rgba(9, 105, 218, 0.6);
-    background: rgba(255, 255, 255, 0.95);
-    --tw-ring-color: rgba(9, 105, 218, 0.15);
+    border-color: rgba(9, 105, 218, 0.5);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
   }
   .label {
     margin-bottom: calc(var(--spacing) * 2);
@@ -4858,54 +5540,6 @@ allowBuilds:
   html.light .label {
     color: #1f2328;
   }
-  .theme-bg-primary {
-    background-color: #0a0a0f;
-  }
-  html.light .theme-bg-primary {
-    background-color: #fafafa;
-  }
-  .theme-bg-surface {
-    background-color: rgba(22, 27, 34, 0.6);
-  }
-  html.light .theme-bg-surface {
-    background-color: rgba(246, 248, 250, 0.6);
-  }
-  .theme-bg-overlay {
-    background-color: rgba(33, 38, 45, 0.6);
-  }
-  html.light .theme-bg-overlay {
-    background-color: rgba(234, 238, 242, 0.6);
-  }
-  .theme-border {
-    border-color: rgba(48, 54, 61, 0.6);
-  }
-  html.light .theme-border {
-    border-color: rgba(208, 215, 222, 0.6);
-  }
-  .theme-border-muted {
-    border-color: rgba(33, 38, 45, 0.6);
-  }
-  html.light .theme-border-muted {
-    border-color: rgba(234, 238, 242, 0.6);
-  }
-  .theme-text-primary {
-    color: #e6edf3;
-  }
-  html.light .theme-text-primary {
-    color: #1f2328;
-  }
-  .theme-text-secondary {
-    color: #8b949e;
-  }
-  html.light .theme-text-secondary {
-    color: #656d76;
-  }
-  .theme-text-muted {
-    color: #6e7681;
-  }
-  html.light .theme-text-muted {
-    color: #8c959f;
-  }
   .noise-bg {
     position: relative;
   }
@@ -4915,17 +5549,17 @@ allowBuilds:
     inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
     pointer-events: none;
-    opacity: 0.4;
+    opacity: 0.35;
   }
   @keyframes float {
     0%, 100% {
       transform: translateY(0px) rotate(0deg);
     }
     33% {
-      transform: translateY(-20px) rotate(1deg);
+      transform: translateY(-18px) rotate(0.8deg);
     }
     66% {
-      transform: translateY(-10px) rotate(-1deg);
+      transform: translateY(-9px) rotate(-0.8deg);
     }
   }
   @keyframes pulse-glow {
@@ -4934,8 +5568,8 @@ allowBuilds:
       transform: scale(1);
     }
     50% {
-      opacity: 0.25;
-      transform: scale(1.05);
+      opacity: 0.22;
+      transform: scale(1.04);
     }
   }
   @keyframes gradient-shift {
@@ -4952,7 +5586,7 @@ allowBuilds:
   @keyframes reveal-up {
     from {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(28px);
     }
     to {
       opacity: 1;
@@ -4965,14 +5599,6 @@ allowBuilds:
     }
     to {
       opacity: 1;
-    }
-  }
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
     }
   }
   .animate-float {
@@ -4992,31 +5618,247 @@ allowBuilds:
     animation: gradient-shift 6s ease infinite;
   }
   .animate-reveal-up {
+    opacity: 0;
     animation: reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .animate-reveal-fade {
+    opacity: 0;
     animation: reveal-fade 1s ease forwards;
   }
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(20px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .reveal.visible {
     opacity: 1;
     transform: translateY(0);
   }
   .reveal-delay-1 {
-    transition-delay: 0.1s;
+    transition-delay: 0.08s;
   }
   .reveal-delay-2 {
-    transition-delay: 0.2s;
+    transition-delay: 0.16s;
   }
   .reveal-delay-3 {
-    transition-delay: 0.3s;
+    transition-delay: 0.24s;
   }
   .reveal-delay-4 {
-    transition-delay: 0.4s;
+    transition-delay: 0.32s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float, .animate-float-delayed, .animate-pulse-glow, .animate-pulse-glow-delayed, .animate-gradient, .animate-reveal-up, .animate-reveal-fade {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+  .nav-logo-wrap {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: box-shadow 0.2s;
+    background: rgba(35, 134, 54, 0.12);
+    border: 1px solid rgba(35, 134, 54, 0.2);
+  }
+  html.light .nav-logo-wrap {
+    background: rgba(35, 134, 54, 0.08);
+    border-color: rgba(35, 134, 54, 0.15);
+  }
+  .nav-logo-wrap:hover {
+    box-shadow: 0 0 14px rgba(35, 134, 54, 0.3);
+  }
+  .nav-logo-img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0) invert(1);
+    transition: filter 0.25s;
+  }
+  html.light .nav-logo-img {
+    filter: none;
+  }
+  .nav-link {
+    color: #8b949e;
+    transition: color 0.15s, background-color 0.15s;
+  }
+  .nav-link:hover {
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.6);
+  }
+  html.light .nav-link {
+    color: #57606a;
+  }
+  html.light .nav-link:hover {
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.7);
+  }
+  .nav-link-active {
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.6);
+  }
+  html.light .nav-link-active {
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.7);
+  }
+  .nav-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(48, 54, 61, 0.6);
+    color: #8b949e;
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+  .nav-icon-btn:hover {
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.6);
+    border-color: rgba(139, 148, 158, 0.4);
+  }
+  html.light .nav-icon-btn {
+    border-color: rgba(208, 215, 222, 0.7);
+    color: #57606a;
+  }
+  html.light .nav-icon-btn:hover {
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.7);
+    border-color: rgba(140, 149, 159, 0.5);
+  }
+  .nav-scrolled {
+    background: rgba(10, 10, 15, 0.88);
+    border-color: rgba(48, 54, 61, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  html.light .nav-scrolled {
+    background: rgba(246, 248, 250, 0.92);
+    border-color: rgba(208, 215, 222, 0.6);
+  }
+  .mobile-menu {
+    background: rgba(10, 10, 15, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: rgba(48, 54, 61, 0.5);
+  }
+  html.light .mobile-menu {
+    background: rgba(246, 248, 250, 0.97);
+    border-color: rgba(208, 215, 222, 0.6);
+  }
+  .social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid rgba(48, 54, 61, 0.6);
+    color: #6e7681;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+  .social-btn:hover {
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.6);
+    border-color: rgba(139, 148, 158, 0.4);
+  }
+  html.light .social-btn {
+    border-color: rgba(208, 215, 222, 0.7);
+    color: #8c959f;
+  }
+  html.light .social-btn:hover {
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.7);
+    border-color: rgba(140, 149, 159, 0.5);
+  }
+  .footer-heading {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #e6edf3;
+  }
+  html.light .footer-heading {
+    color: #1f2328;
+  }
+  .footer-link {
+    display: block;
+    font-size: 0.875rem;
+    color: #8b949e;
+    transition: color 0.15s;
+  }
+  .footer-link:hover {
+    color: #e6edf3;
+  }
+  html.light .footer-link {
+    color: #57606a;
+  }
+  html.light .footer-link:hover {
+    color: #1f2328;
+  }
+  .filter-btn {
+    border-radius: 8px;
+    border: 1px solid rgba(48, 54, 61, 0.6);
+    padding: 6px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #8b949e;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover {
+    border-color: rgba(139, 148, 158, 0.5);
+    color: #e6edf3;
+    background: rgba(22, 27, 34, 0.5);
+  }
+  html.light .filter-btn {
+    border-color: rgba(208, 215, 222, 0.8);
+    color: #57606a;
+  }
+  html.light .filter-btn:hover {
+    border-color: rgba(140, 149, 159, 0.6);
+    color: #1f2328;
+    background: rgba(234, 238, 242, 0.7);
+  }
+  .filter-btn-active {
+    border-radius: 8px;
+    border: 1px solid rgba(35, 134, 54, 0.5);
+    padding: 6px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #3fb950;
+    background: rgba(35, 134, 54, 0.1);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  html.light .filter-btn-active {
+    border-color: rgba(26, 127, 55, 0.4);
+    color: #1a7f37;
+    background: rgba(26, 127, 55, 0.08);
+  }
+  .project-placeholder {
+    background: rgba(22, 27, 34, 0.8);
+  }
+  html.light .project-placeholder {
+    background: rgba(234, 238, 242, 0.8);
+  }
+  .project-placeholder-text {
+    color: rgba(48, 54, 61, 0.8);
+  }
+  html.light .project-placeholder-text {
+    color: rgba(140, 149, 159, 0.7);
   }
 }
 @property --tw-translate-x {
