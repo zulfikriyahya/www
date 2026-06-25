@@ -6,6 +6,14 @@
       document.documentElement.classList.remove("light");
     }
     syncIcons();
+    updateScrollbarTheme(theme);
+  }
+
+  function updateScrollbarTheme(theme) {
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "light" ? "#fafafa" : "#0a0a0f");
+    }
   }
 
   function syncIcons() {
@@ -21,7 +29,9 @@
   window.toggleTheme = function () {
     var isLight = document.documentElement.classList.contains("light");
     var next = isLight ? "dark" : "light";
-    localStorage.setItem("theme", next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch (e) {}
     applyTheme(next);
   };
 
@@ -30,51 +40,79 @@
   });
 })();
 
+// Smooth scroll untuk anchor links
 document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    var target = document.querySelector(this.getAttribute("href"));
+    var href = this.getAttribute("href");
+    if (href === "#") return;
+    var target = document.querySelector(href);
     if (target) {
+      e.preventDefault();
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
 });
 
-var animateCounter = function (el) {
-  var target = parseInt(el.dataset.target);
-  var duration = 2000;
-  var step = target / (duration / 16);
-  var current = 0;
-  var timer = setInterval(function () {
-    current += step;
-    if (current >= target) {
-      current = target;
-      clearInterval(timer);
-    }
-    el.textContent = Math.floor(current).toLocaleString("id-ID");
-  }, 16);
-};
+// Scroll progress bar
+(function () {
+  var bar = document.getElementById("scroll-progress");
+  if (!bar) return;
+  function updateProgress() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = pct + "%";
+  }
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  updateProgress();
+})();
 
-var counters = document.querySelectorAll("[data-counter]");
-if (counters.length) {
+// Counter animation dengan IntersectionObserver
+(function () {
+  var counters = document.querySelectorAll("[data-counter]");
+  if (!counters.length) return;
+
   var counterObserver = new IntersectionObserver(
     function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-          counterObserver.unobserve(entry.target);
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var target = parseInt(el.dataset.target, 10);
+        var duration = 1800;
+        var startTime = null;
+        var startVal = 0;
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          var ease = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.floor(startVal + (target - startVal) * ease).toLocaleString(
+            "id-ID"
+          );
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = target.toLocaleString("id-ID");
+          }
         }
+
+        requestAnimationFrame(step);
+        counterObserver.unobserve(el);
       });
     },
     { threshold: 0.5 }
   );
+
   counters.forEach(function (counter) {
     counterObserver.observe(counter);
   });
-}
+})();
 
-var reveals = document.querySelectorAll(".reveal");
-if (reveals.length) {
+// Reveal on scroll
+(function () {
+  var reveals = document.querySelectorAll(".reveal");
+  if (!reveals.length) return;
+
   var revealObserver = new IntersectionObserver(
     function (entries) {
       entries.forEach(function (entry) {
@@ -84,23 +122,42 @@ if (reveals.length) {
         }
       });
     },
-    { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
+    { threshold: 0.08, rootMargin: "0px 0px -48px 0px" }
   );
+
   reveals.forEach(function (el) {
     revealObserver.observe(el);
   });
-}
+})();
 
-document.addEventListener("mousemove", function (e) {
-  var blobs = document.querySelectorAll(".animate-pulse-glow, .animate-pulse-glow-delayed");
-  var x = (e.clientX / window.innerWidth - 0.5) * 20;
-  var y = (e.clientY / window.innerHeight - 0.5) * 20;
-  blobs.forEach(function (blob, i) {
-    var factor = i % 2 === 0 ? 1 : -0.6;
-    blob.style.transform = "translate(" + x * factor + "px, " + y * factor + "px)";
+// Parallax blob pada mouse move — hanya desktop
+(function () {
+  if (window.matchMedia("(hover: none)").matches) return;
+
+  var ticking = false;
+  var mouseX = 0;
+  var mouseY = 0;
+
+  document.addEventListener("mousemove", function (e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if (!ticking) {
+      requestAnimationFrame(function () {
+        var blobs = document.querySelectorAll(".animate-pulse-glow, .animate-pulse-glow-delayed");
+        var x = (mouseX / window.innerWidth - 0.5) * 18;
+        var y = (mouseY / window.innerHeight - 0.5) * 18;
+        blobs.forEach(function (blob, i) {
+          var factor = i % 2 === 0 ? 1 : -0.5;
+          blob.style.transform = "translate(" + x * factor + "px, " + y * factor + "px)";
+        });
+        ticking = false;
+      });
+      ticking = true;
+    }
   });
-});
+})();
 
+// Alpine.js contact form
 document.addEventListener("alpine:init", function () {
   Alpine.data("contactForm", function (pocketbaseUrl) {
     return {
@@ -110,12 +167,18 @@ document.addEventListener("alpine:init", function () {
 
       validate: function () {
         this.errors = {};
-        if (!this.form.name) this.errors.name = "Nama wajib diisi";
-        if (!this.form.email || !this.form.email.includes("@"))
-          this.errors.email = "Email tidak valid";
-        if (!this.form.need_type) this.errors.need_type = "Pilih salah satu kebutuhan";
-        if (!this.form.message || this.form.message.length < 10)
+        if (!this.form.name || this.form.name.trim().length < 2) {
+          this.errors.name = "Nama minimal 2 karakter";
+        }
+        if (!this.form.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.form.email)) {
+          this.errors.email = "Alamat email tidak valid";
+        }
+        if (!this.form.need_type) {
+          this.errors.need_type = "Pilih salah satu kebutuhan";
+        }
+        if (!this.form.message || this.form.message.trim().length < 10) {
           this.errors.message = "Pesan minimal 10 karakter";
+        }
         return Object.keys(this.errors).length === 0;
       },
 
@@ -126,9 +189,18 @@ document.addEventListener("alpine:init", function () {
           var res = await fetch(pocketbaseUrl + "/api/collections/contact_submissions/records", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(this.form),
+            body: JSON.stringify({
+              name: this.form.name.trim(),
+              email: this.form.email.trim().toLowerCase(),
+              need_type: this.form.need_type,
+              message: this.form.message.trim(),
+            }),
           });
-          this.status = res.ok ? "success" : "error";
+          if (res.ok) {
+            this.status = "success";
+          } else {
+            this.status = "error";
+          }
         } catch (e) {
           this.status = "error";
         }

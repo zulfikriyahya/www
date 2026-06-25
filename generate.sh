@@ -22,6 +22,7 @@ EXCLUDE_DIRS=(
   "public"
   "resources"
   "themes"
+  "content"
 )
 
 EXCLUDE_FILES=(

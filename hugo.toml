@@ -2,14 +2,13 @@ baseURL = "https://zedlabs.id"
 defaultContentLanguage = "id"
 title = "ZEDLABS — Innovate Beyond Limits"
 theme = ""
-
 [languages]
   [languages.id]
     locale = "id"
     weight = 1
 
 [params]
-  description = "IT Consulting, Web & Mobile Development, dan SaaS solutions."
+  description = "IT Consulting, Web & Mobile Development, dan SaaS solutions untuk bisnis yang ingin tumbuh lebih cepat."
   tagline = "Innovate Beyond Limits"
   email = "hello@zedlabs.id"
   whatsapp = "+62895351856267"

@@ -17,16 +17,16 @@
         <span class="text-3xl mb-4">{{ . }}</span>
         {{ end }}
         {{ with .Params.badge }}
-        <span class="badge-{{ $.Params.badge_color | default " blue" }} self-start mb-3">{{ . }}</span>
+        <span class="badge-blue self-start mb-3">{{ . }}</span>
         {{ end }}
-        <h2 class="text-lg font-semibold text-[#e6edf3] group-hover:text-[#388bfd] transition-colors">
+        <h2 class="text-lg font-semibold theme-text-primary group-hover:text-[#388bfd] transition-colors">
           {{ .Title }}
         </h2>
         {{ with .Description }}
-        <p class="mt-2 text-sm text-[#8b949e] leading-relaxed flex-1">{{ . }}</p>
+        <p class="mt-2 text-sm theme-text-secondary leading-relaxed flex-1">{{ . }}</p>
         {{ end }}
         <div
-          class="mt-6 flex items-center gap-1 pt-4 border-t border-[#21262d] text-sm text-[#8b949e] group-hover:text-[#388bfd] transition-colors">
+          class="mt-6 flex items-center gap-1 pt-4 border-t theme-border text-sm theme-text-secondary group-hover:text-[#388bfd] transition-colors">
           Pelajari lebih lanjut
           <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
             viewBox="0 0 24 24">

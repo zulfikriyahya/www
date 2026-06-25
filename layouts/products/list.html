@@ -14,24 +14,24 @@
       {{ range .Pages }}
       <a href="{{ .Permalink }}" class="card-interactive group flex flex-col overflow-hidden">
         {{ with index .Params.screenshots 0 }}
-        <div class="aspect-video overflow-hidden bg-[#21262d]">
+        <div class="aspect-video overflow-hidden project-placeholder">
           <img src="{{ . }}" alt="{{ $.Title }}"
             class="h-full w-full object-cover opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105" />
         </div>
         {{ else }}
-        <div class="flex aspect-video items-center justify-center bg-[#21262d]">
-          <span class="font-mono text-3xl font-bold text-[#30363d]">{{ substr .Title 0 1 }}</span>
+        <div class="flex aspect-video items-center justify-center project-placeholder">
+          <span class="font-mono text-3xl font-bold project-placeholder-text">{{ substr .Title 0 1 }}</span>
         </div>
         {{ end }}
         <div class="flex flex-1 flex-col p-6">
           {{ with .Params.category }}
           <span class="badge-purple self-start mb-3">{{ . }}</span>
           {{ end }}
-          <h2 class="font-semibold text-[#e6edf3] leading-snug group-hover:text-[#388bfd] transition-colors">
+          <h2 class="font-semibold theme-text-primary leading-snug group-hover:text-[#388bfd] transition-colors">
             {{ .Title }}
           </h2>
           {{ with .Description }}
-          <p class="mt-2 text-sm text-[#8b949e] leading-relaxed flex-1">{{ . }}</p>
+          <p class="mt-2 text-sm theme-text-secondary leading-relaxed flex-1">{{ . }}</p>
           {{ end }}
         </div>
       </a>
