@@ -1,20 +1,47 @@
 [
   {
-    "name": "Zed Arifin",
+    "name": "Yahya Zulfikri",
     "role": "Founder & Lead Engineer",
     "avatar": "",
-    "bio": "10 tahun membangun produk digital dari skala startup hingga enterprise. Fokus pada arsitektur sistem dan engineering culture."
+    "bio": "10 tahun membangun produk digital dari skala startup hingga enterprise. Sebelum mendirikan ZEDLABS, pernah menjadi lead engineer di dua startup fintech Indonesia yang berhasil scale ke lebih dari 500 ribu pengguna. Fokus pada arsitektur sistem terdistribusi dan engineering culture yang sustainable.",
+    "skills": [
+      "Go",
+      "PostgreSQL",
+      "Docker",
+      "System Design",
+      "Engineering Leadership"
+    ],
+    "linkedin": "https://linkedin.com/in/zulfikriyahya",
+    "github": "https://github.com/zulfikriyahya"
   },
   {
-    "name": "Aira Putri",
-    "role": "UI/UX & Frontend",
+    "name": "Evan Azhar Hartana",
+    "role": "UI/UX & Frontend Lead",
     "avatar": "",
-    "bio": "Spesialis desain antarmuka yang berpikir dalam sistem. Percaya bahwa UX yang baik dimulai dari pemahaman bisnis yang mendalam."
+    "bio": "Desainer dan frontend engineer dengan latar belakang psikologi kognitif. Percaya bahwa antarmuka yang baik dimulai dari pemahaman mendalam tentang perilaku pengguna, bukan sekadar estetika. Telah mendesain lebih dari 40 produk digital di berbagai industri.",
+    "skills": [
+      "Figma",
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "User Research"
+    ],
+    "linkedin": "https://linkedin.com/in/evanazhr",
+    "github": "https://github.com/evanazhr"
   },
   {
-    "name": "Rizal Maulana",
-    "role": "Backend & DevOps",
+    "name": "Abdul Rohman",
+    "role": "Backend & DevOps Engineer",
     "avatar": "",
-    "bio": "Infrastructure engineer dengan obsesi terhadap reliability dan observability. Jika bisa di-automate, akan di-automate."
+    "bio": "Infrastructure engineer dengan obsesi terhadap reliability, observability, dan otomasi. Berpengalaman mengelola infrastruktur yang melayani jutaan request per hari. Jika sesuatu bisa di-automate, akan di-automate — tidak ada pengecualian.",
+    "skills": [
+      "Go",
+      "Kubernetes",
+      "Cloudflare",
+      "PostgreSQL",
+      "Observability"
+    ],
+    "linkedin": "https://linkedin.com/in/rohmanis",
+    "github": "https://github.com/rohmanis"
   }
 ]
