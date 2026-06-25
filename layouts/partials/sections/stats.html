@@ -1,12 +1,17 @@
-<section class="border-t theme-border theme-bg-surface">
-  <div class="container-content py-16">
+<section class="border-t theme-border relative overflow-hidden">
+
+  <div class="absolute inset-0 pointer-events-none"
+    style="background: linear-gradient(135deg, rgba(35,134,54,0.03) 0%, transparent 50%, rgba(31,111,235,0.03) 100%);">
+  </div>
+
+  <div class="container-content py-20 relative">
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
       {{ range site.Data.stats }}
-      <div class="text-center">
-        <div class="text-4xl font-bold font-mono theme-text-primary">
+      <div class="text-center reveal">
+        <div class="text-4xl sm:text-5xl font-bold font-mono theme-text-primary">
           <span data-counter data-target="{{ .value }}">0</span>{{ .suffix }}
         </div>
-        <p class="text-sm theme-text-secondary mt-2">{{ .label }}</p>
+        <p class="text-sm theme-text-secondary mt-3">{{ .label }}</p>
       </div>
       {{ end }}
     </div>

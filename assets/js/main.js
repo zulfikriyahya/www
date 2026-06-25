@@ -45,7 +45,6 @@ var animateCounter = function (el) {
   var duration = 2000;
   var step = target / (duration / 16);
   var current = 0;
-
   var timer = setInterval(function () {
     current += step;
     if (current >= target) {
@@ -58,48 +57,65 @@ var animateCounter = function (el) {
 
 var counters = document.querySelectorAll("[data-counter]");
 if (counters.length) {
-  var observer = new IntersectionObserver(
+  var counterObserver = new IntersectionObserver(
     function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           animateCounter(entry.target);
-          observer.unobserve(entry.target);
+          counterObserver.unobserve(entry.target);
         }
       });
     },
     { threshold: 0.5 }
   );
   counters.forEach(function (counter) {
-    observer.observe(counter);
+    counterObserver.observe(counter);
   });
 }
+
+var reveals = document.querySelectorAll(".reveal");
+if (reveals.length) {
+  var revealObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
+  );
+  reveals.forEach(function (el) {
+    revealObserver.observe(el);
+  });
+}
+
+document.addEventListener("mousemove", function (e) {
+  var blobs = document.querySelectorAll(".animate-pulse-glow, .animate-pulse-glow-delayed");
+  var x = (e.clientX / window.innerWidth - 0.5) * 20;
+  var y = (e.clientY / window.innerHeight - 0.5) * 20;
+  blobs.forEach(function (blob, i) {
+    var factor = i % 2 === 0 ? 1 : -0.6;
+    blob.style.transform = "translate(" + x * factor + "px, " + y * factor + "px)";
+  });
+});
 
 document.addEventListener("alpine:init", function () {
   Alpine.data("contactForm", function (pocketbaseUrl) {
     return {
-      form: {
-        name: "",
-        email: "",
-        need_type: "",
-        message: "",
-      },
+      form: { name: "", email: "", need_type: "", message: "" },
       status: "idle",
       errors: {},
 
       validate: function () {
         this.errors = {};
-        if (!this.form.name) {
-          this.errors.name = "Nama wajib diisi";
-        }
-        if (!this.form.email || !this.form.email.includes("@")) {
+        if (!this.form.name) this.errors.name = "Nama wajib diisi";
+        if (!this.form.email || !this.form.email.includes("@"))
           this.errors.email = "Email tidak valid";
-        }
-        if (!this.form.need_type) {
-          this.errors.need_type = "Pilih salah satu kebutuhan";
-        }
-        if (!this.form.message || this.form.message.length < 10) {
+        if (!this.form.need_type) this.errors.need_type = "Pilih salah satu kebutuhan";
+        if (!this.form.message || this.form.message.length < 10)
           this.errors.message = "Pesan minimal 10 karakter";
-        }
         return Object.keys(this.errors).length === 0;
       },
 

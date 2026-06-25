@@ -1,25 +1,34 @@
 {{ $cta := .Params.cta }}
 
-<section class="section border-t border-[#21262d]">
+<section class="section border-t theme-border">
   <div class="container-content">
-    <div class="relative rounded-2xl border border-[#30363d] bg-[#161b22] overflow-hidden p-12 text-center">
+    <div class="relative rounded-3xl border overflow-hidden p-12 sm:p-20 text-center"
+      style="border-color: rgba(35,134,54,0.2); background: rgba(22,27,34,0.4); backdrop-filter: blur(20px);">
 
-      <!-- Background glow -->
-      <div
-        class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-[#238636] blur-3xl opacity-10 pointer-events-none">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-64 rounded-full animate-pulse-glow"
+          style="background: radial-gradient(ellipse, rgba(35,134,54,0.15) 0%, transparent 70%);"></div>
+        <div class="absolute inset-0"
+          style="background: linear-gradient(135deg, rgba(35,134,54,0.05) 0%, transparent 50%, rgba(31,111,235,0.05) 100%);">
+        </div>
       </div>
 
-      <span class="section-label">Mulai Sekarang</span>
-      <h2 class="section-title mt-2">{{ $cta.title }}</h2>
-      <p class="section-subtitle max-w-xl mx-auto">{{ $cta.subtitle }}</p>
+      <div class="relative reveal">
+        <span class="section-label">Mulai Sekarang</span>
+        <h2 class="section-title mt-4">{{ $cta.title }}</h2>
+        <p class="section-subtitle max-w-xl mx-auto">{{ $cta.subtitle }}</p>
 
-      <div class="flex flex-wrap justify-center gap-4 mt-10">
-        <a href="{{ $cta.primary.url }}" class="btn-primary px-8 py-3 text-base">
-          {{ $cta.primary.label }}
-        </a>
-        <a href="{{ $cta.secondary.url }}" class="btn-outline px-8 py-3 text-base">
-          {{ $cta.secondary.label }}
-        </a>
+        <div class="flex flex-wrap justify-center gap-4 mt-12">
+          <a href="{{ $cta.primary.url }}" class="btn-primary px-10 py-4 text-base">
+            {{ $cta.primary.label }}
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a href="{{ $cta.secondary.url }}" class="btn-outline px-10 py-4 text-base">
+            {{ $cta.secondary.label }}
+          </a>
+        </div>
       </div>
 
     </div>
