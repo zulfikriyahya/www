@@ -1,7 +1,7 @@
 baseURL = "https://zedlabs.id"
 defaultContentLanguage = "id"
 title = "ZEDLABS — Innovate Beyond Limits"
-theme = ""
+
 [languages]
   [languages.id]
     locale = "id"

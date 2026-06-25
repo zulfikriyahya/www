@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --watch\" \"hugo server --disableFastRender\"",
-    "build": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --minify && hugo --minify",
+    "build": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --minify && cp ./assets/js/main.js ./static/js/main.js && hugo --minify",
     "clean": "rm -rf public resources"
   },
   "devDependencies": {
