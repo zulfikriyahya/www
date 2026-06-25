@@ -1,0 +1,156 @@
+{{ define "main" }}
+<div class="pt-32 section">
+  <div class="container-content">
+
+    <!-- Hero -->
+    <div class="max-w-3xl">
+      <span class="section-label">Tentang Kami</span>
+      <h1 class="section-title">Kami bukan vendor biasa</h1>
+      <p class="section-subtitle text-lg">
+        ZEDLABS adalah studio teknologi yang fokus membantu bisnis bertransformasi digital.
+        Kami tidak hanya membangun produk — kami memastikan produk tersebut berdampak nyata.
+      </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="mt-16 grid grid-cols-2 gap-6 border-t border-b border-[#21262d] py-12 sm:grid-cols-4">
+      {{ range .Site.Data.stats }}
+      <div class="text-center">
+        <div class="text-4xl font-bold font-mono text-[#e6edf3]">
+          <span data-counter data-target="{{ .value }}">0</span>{{ .suffix }}
+        </div>
+        <p class="mt-2 text-sm text-[#8b949e]">{{ .label }}</p>
+      </div>
+      {{ end }}
+    </div>
+
+    <!-- Story -->
+    <div class="mt-20 grid grid-cols-1 gap-16 lg:grid-cols-2">
+      <div>
+        <h2 class="text-2xl font-bold text-[#e6edf3] tracking-tight">Bagaimana kami memulai</h2>
+        <div class="prose-zed mt-6">
+          {{ .Content }}
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="card p-5 flex items-start gap-4">
+          <div
+            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[#30363d] bg-[#0d1117]">
+            <svg class="h-4 w-4 text-[#238636]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-[#e6edf3]">Fokus pada Hasil</h3>
+            <p class="mt-1 text-sm text-[#8b949e] leading-relaxed">
+              Setiap keputusan teknis didasarkan pada tujuan bisnis, bukan preferensi teknologi semata.
+            </p>
+          </div>
+        </div>
+
+        <div class="card p-5 flex items-start gap-4">
+          <div
+            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[#30363d] bg-[#0d1117]">
+            <svg class="h-4 w-4 text-[#238636]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-[#e6edf3]">Delivery Cepat</h3>
+            <p class="mt-1 text-sm text-[#8b949e] leading-relaxed">
+              MVP dalam 4–6 minggu. Kami percaya pada iterasi cepat dan feedback nyata dari pengguna.
+            </p>
+          </div>
+        </div>
+
+        <div class="card p-5 flex items-start gap-4">
+          <div
+            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[#30363d] bg-[#0d1117]">
+            <svg class="h-4 w-4 text-[#238636]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-[#e6edf3]">Transparan</h3>
+            <p class="mt-1 text-sm text-[#8b949e] leading-relaxed">
+              Progress real-time, tidak ada kejutan di akhir proyek. Anda selalu tahu apa yang sedang dikerjakan.
+            </p>
+          </div>
+        </div>
+
+        <div class="card p-5 flex items-start gap-4">
+          <div
+            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[#30363d] bg-[#0d1117]">
+            <svg class="h-4 w-4 text-[#238636]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-[#e6edf3]">Partner, Bukan Vendor</h3>
+            <p class="mt-1 text-sm text-[#8b949e] leading-relaxed">
+              Kami ikut berpikir tentang bisnis Anda, bukan hanya menjalankan spesifikasi yang diberikan.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team -->
+    {{ with .Site.Data.team }}
+    <div class="mt-24">
+      <div class="text-center mb-12">
+        <span class="section-label">Tim</span>
+        <h2 class="section-title">Orang-orang di balik ZEDLABS</h2>
+      </div>
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {{ range . }}
+        <div class="card p-6 text-center">
+          {{ if .avatar }}
+          <img src="{{ .avatar }}" alt="{{ .name }}"
+            class="mx-auto mb-4 h-16 w-16 rounded-full border-2 border-[#30363d] object-cover" />
+          {{ else }}
+          <div
+            class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[#30363d] bg-[#21262d] font-mono text-xl font-bold text-[#8b949e]">
+            {{ substr .name 0 1 }}
+          </div>
+          {{ end }}
+          <h3 class="font-semibold text-[#e6edf3]">{{ .name }}</h3>
+          <p class="mt-1 text-sm text-[#8b949e]">{{ .role }}</p>
+          {{ with .bio }}
+          <p class="mt-3 text-xs text-[#6e7681] leading-relaxed">{{ . }}</p>
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+    <!-- Partners -->
+    {{ with .Site.Data.partners }}
+    <div class="mt-24 border-t border-[#21262d] pt-20 text-center">
+      <p class="text-xs font-mono uppercase tracking-widest text-[#6e7681] mb-10">Teknologi yang Kami Gunakan</p>
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        {{ range . }}
+        <span class="tag text-sm px-4 py-2">{{ .name }}</span>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+    <!-- CTA -->
+    <div class="mt-24 rounded-2xl border border-[#30363d] bg-[#161b22] p-12 text-center">
+      <h2 class="text-2xl font-bold text-[#e6edf3]">Tertarik bekerja sama?</h2>
+      <p class="mt-3 text-[#8b949e]">Konsultasi pertama gratis. Tidak ada kewajiban apapun.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="/contact" class="btn-primary px-8 py-3">Mulai Konsultasi</a>
+        <a href="/projects" class="btn-outline px-8 py-3">Lihat Proyek Kami</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{{ end }}

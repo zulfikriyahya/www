@@ -1,0 +1,43 @@
+{{ define "main" }}
+<div class="pt-32 section">
+  <div class="container-content">
+
+    <div class="max-w-2xl">
+      <span class="section-label">Produk</span>
+      <h1 class="section-title">Produk yang Kami Bangun</h1>
+      <p class="section-subtitle">
+        SaaS tools dan solusi siap pakai yang lahir dari pengalaman membangun ratusan proyek.
+      </p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {{ range .Pages }}
+      <a href="{{ .Permalink }}" class="card-interactive group flex flex-col overflow-hidden">
+        {{ with index .Params.screenshots 0 }}
+        <div class="aspect-video overflow-hidden bg-[#21262d]">
+          <img src="{{ . }}" alt="{{ $.Title }}"
+            class="h-full w-full object-cover opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105" />
+        </div>
+        {{ else }}
+        <div class="flex aspect-video items-center justify-center bg-[#21262d]">
+          <span class="font-mono text-3xl font-bold text-[#30363d]">{{ substr .Title 0 1 }}</span>
+        </div>
+        {{ end }}
+        <div class="flex flex-1 flex-col p-6">
+          {{ with .Params.category }}
+          <span class="badge-purple self-start mb-3">{{ . }}</span>
+          {{ end }}
+          <h2 class="font-semibold text-[#e6edf3] leading-snug group-hover:text-[#388bfd] transition-colors">
+            {{ .Title }}
+          </h2>
+          {{ with .Description }}
+          <p class="mt-2 text-sm text-[#8b949e] leading-relaxed flex-1">{{ . }}</p>
+          {{ end }}
+        </div>
+      </a>
+      {{ end }}
+    </div>
+
+  </div>
+</div>
+{{ end }}

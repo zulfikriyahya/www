@@ -1,0 +1,73 @@
+{{ define "main" }}
+<article class="pt-32 section">
+  <div class="container-content">
+    <div class="max-w-3xl mx-auto">
+
+      <header class="mb-12">
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+          {{ with .Params.category }}
+          <a href="/blog" class="badge-blue">{{ . }}</a>
+          {{ end }}
+          {{ range .Params.tags }}
+          <span class="tag">{{ . }}</span>
+          {{ end }}
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl font-bold leading-tight tracking-tight text-[#e6edf3]">
+          {{ .Title }}
+        </h1>
+
+        {{ with .Description }}
+        <p class="mt-5 text-lg text-[#8b949e] leading-relaxed">{{ . }}</p>
+        {{ end }}
+
+        <div class="mt-8 flex items-center justify-between border-t border-b border-[#21262d] py-4">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-[#21262d] font-mono text-sm font-bold text-[#8b949e] border border-[#30363d]">
+              Z
+            </div>
+            <div>
+              <p class="text-sm font-medium text-[#e6edf3]">ZEDLABS</p>
+              <p class="text-xs text-[#6e7681]">
+                <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
+              </p>
+            </div>
+          </div>
+          <span class="text-xs font-mono text-[#6e7681]">{{ .ReadingTime }} min read</span>
+        </div>
+      </header>
+
+      {{ with .Params.thumbnail }}
+      <div class="mb-12 overflow-hidden rounded-xl border border-[#30363d]">
+        <img src="{{ . }}" alt="{{ $.Title }}" class="w-full object-cover" />
+      </div>
+      {{ end }}
+
+      <div class="prose-zed">
+        {{ .Content }}
+      </div>
+
+      <footer class="mt-16 pt-10 border-t border-[#21262d]">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div>
+            <p class="text-xs font-mono text-[#6e7681] mb-2">Tags</p>
+            <div class="flex flex-wrap gap-2">
+              {{ range .Params.tags }}
+              <span class="tag">{{ . }}</span>
+              {{ end }}
+            </div>
+          </div>
+          <a href="/blog" class="btn-outline text-sm">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+            </svg>
+            Semua Tulisan
+          </a>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+</article>
+{{ end }}

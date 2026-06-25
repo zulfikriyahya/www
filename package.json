@@ -1,0 +1,14 @@
+{
+  "name": "zedlabs-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "hugo server --disableFastRender",
+    "build": "hugo --minify",
+    "clean": "rm -rf public resources"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "latest",
+    "tailwindcss": "latest"
+  }
+}

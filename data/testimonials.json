@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Andi Prasetyo",
+    "role": "CTO",
+    "company": "TechCorp Indonesia",
+    "avatar": "",
+    "content": "ZEDLABS berhasil membangun platform kami dalam waktu 6 minggu. Kualitas kode dan komunikasinya sangat profesional.",
+    "rating": 5
+  },
+  {
+    "name": "Sarah Wijaya",
+    "role": "Product Manager",
+    "company": "Startup Fintech X",
+    "avatar": "",
+    "content": "Tim yang sangat responsif dan paham kebutuhan bisnis. Mereka tidak hanya coding, tapi benar-benar memahami masalah yang ingin kami selesaikan.",
+    "rating": 5
+  },
+  {
+    "name": "Budi Santoso",
+    "role": "CEO",
+    "company": "RetailPlus",
+    "avatar": "",
+    "content": "Investasi terbaik yang pernah kami lakukan. ROI dari sistem yang ZEDLABS bangun terasa dalam 3 bulan pertama.",
+    "rating": 5
+  }
+]

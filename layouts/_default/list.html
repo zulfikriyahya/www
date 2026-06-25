@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="pt-32 section">
+  <div class="container-content">
+    <h1 class="section-title">{{ .Title }}</h1>
+    {{ with .Content }}
+    <div class="prose-zed mt-6 max-w-2xl">{{ . }}</div>
+    {{ end }}
+
+    {{ if .Pages }}
+    <ul class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {{ range .Pages }}
+      <li>
+        <a href="{{ .Permalink }}" class="card-interactive block p-6 h-full">
+          <h2 class="font-semibold text-[#e6edf3]">{{ .Title }}</h2>
+          {{ with .Description }}
+          <p class="mt-2 text-sm text-[#8b949e] leading-relaxed">{{ . }}</p>
+          {{ end }}
+          <p class="mt-4 text-xs font-mono text-[#6e7681]">
+            {{ .Date.Format "2 Jan 2006" }}
+          </p>
+        </a>
+      </li>
+      {{ end }}
+    </ul>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

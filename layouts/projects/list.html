@@ -1,0 +1,73 @@
+{{ define "main" }}
+<div class="pt-32 section">
+  <div class="container-content">
+
+    <div class="max-w-2xl">
+      <span class="section-label">Portofolio</span>
+      <h1 class="section-title">Proyek yang Kami Bangun</h1>
+      <p class="section-subtitle">
+        Dari startup hingga enterprise. Setiap proyek adalah bukti nyata dari pendekatan kami.
+      </p>
+    </div>
+
+    <div x-data="{
+        active: 'Semua',
+        categories: ['Semua', 'Web', 'Mobile', 'SaaS', 'Consulting']
+      }" class="mt-16">
+      <div class="flex flex-wrap gap-2 mb-10">
+        <template x-for="cat in categories" :key="cat">
+          <button @click="active = cat" :class="active === cat
+              ? 'border-[#238636] bg-[#0f2d1a] text-[#3fb950]'
+              : 'border-[#30363d] text-[#8b949e] hover:border-[#8b949e] hover:text-[#e6edf3]'"
+            class="rounded-md border px-4 py-1.5 text-sm font-medium transition-all duration-150" x-text="cat"></button>
+        </template>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {{ range .Pages }}
+        {{ if .Params.is_public | default true }}
+
+        href="{{ .Permalink }}"
+        x-show="active === 'Semua' || active === '{{ .Params.category }}'"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        class="card-interactive group flex flex-col overflow-hidden"
+        >
+        {{ with .Params.thumbnail }}
+        <div class="aspect-video overflow-hidden bg-[#21262d]">
+          <img src="{{ . }}" alt="{{ $.Title }}"
+            class="h-full w-full object-cover opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105" />
+        </div>
+        {{ else }}
+        <div class="flex aspect-video items-center justify-center bg-[#21262d]">
+          <span class="font-mono text-3xl font-bold text-[#30363d]">{{ substr .Title 0 1 }}</span>
+        </div>
+        {{ end }}
+        <div class="flex flex-1 flex-col p-6">
+          {{ with .Params.category }}
+          <span class="badge-blue self-start mb-3">{{ . }}</span>
+          {{ end }}
+          <h2 class="font-semibold text-[#e6edf3] leading-snug group-hover:text-[#388bfd] transition-colors">
+            {{ .Title }}
+          </h2>
+          {{ with .Description }}
+          <p class="mt-2 text-sm text-[#8b949e] leading-relaxed flex-1">{{ . }}</p>
+          {{ end }}
+          {{ with .Params.tech_stack }}
+          <div class="mt-5 flex flex-wrap gap-1.5 pt-4 border-t border-[#21262d]">
+            {{ range first 4 . }}
+            <span class="tag">{{ . }}</span>
+            {{ end }}
+          </div>
+          {{ end }}
+        </div>
+        </a>
+        {{ end }}
+        {{ end }}
+      </div>
+    </div>
+
+  </div>
+</div>
+{{ end }}

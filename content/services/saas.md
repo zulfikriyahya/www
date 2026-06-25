@@ -1,0 +1,35 @@
+---
+title: "SaaS Development"
+description: "Kami rancang dan bangun produk SaaS dari nol — arsitektur, UI, billing, hingga go-to-market."
+badge: "SaaS"
+badge_color: "green"
+icon: "package"
+weight: 3
+---
+
+## Membangun SaaS yang benar
+
+SaaS bukan sekadar web app yang dibayar bulanan. Ada puluhan keputusan arsitektur yang harus benar sejak awal — multi-tenancy, billing, onboarding, observability. Salah di awal, biayanya mahal di kemudian hari.
+
+## Yang kami tangani
+
+**Arsitektur & Infrastruktur** — Multi-tenant database design, autentikasi, authorization, dan infrastruktur yang bisa scale.
+
+**Billing & Subscription** — Integrasi Stripe atau Midtrans, manajemen plan, trial, dan upgrade/downgrade flow.
+
+**Onboarding Flow** — User onboarding yang memastikan activation rate tinggi sejak hari pertama.
+
+**Admin Dashboard** — Internal tools untuk tim Anda mengelola user, subscription, dan data.
+
+**Analytics & Observability** — Error tracking, performance monitoring, dan product analytics bawaan.
+
+## Pendekatan kami
+
+Kami tidak langsung membangun semua fitur. Kami mulai dari core loop — fitur paling kritis yang membuat user mendapatkan value pertama mereka. Setelah itu iterasi berdasarkan data.
+
+## Deliverable
+
+- Source code dengan dokumentasi teknis
+- Deployment ke infrastruktur pilihan Anda
+- Runbook untuk operasional
+- Sesi handover ke tim internal

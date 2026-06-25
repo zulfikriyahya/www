@@ -1,0 +1,54 @@
+{{ define "main" }}
+<article class="pt-32 section">
+  <div class="container-content">
+
+    <div class="max-w-4xl mx-auto">
+
+      <header class="mb-12">
+        {{ with .Params.category }}
+        <span class="badge-purple mb-4">{{ . }}</span>
+        {{ end }}
+        <h1 class="section-title">{{ .Title }}</h1>
+        {{ with .Description }}
+        <p class="section-subtitle text-lg">{{ . }}</p>
+        {{ end }}
+      </header>
+
+      {{ with index .Params.screenshots 0 }}
+      <div class="mb-16 overflow-hidden rounded-xl border border-[#30363d]">
+        <img src="{{ . }}" alt="{{ $.Title }}" class="w-full object-cover" />
+      </div>
+      {{ end }}
+
+      {{ with .Params.features }}
+      <div class="mb-16">
+        <h2 class="text-xl font-bold text-[#e6edf3] mb-6">Fitur Utama</h2>
+        <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {{ range . }}
+          <li class="flex items-start gap-3 rounded-lg border border-[#30363d] bg-[#161b22] p-4">
+            <svg class="mt-0.5 h-4 w-4 shrink-0 text-[#238636]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-[#8b949e]">{{ . }}</span>
+          </li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+
+      {{ with .Content }}
+      <div class="prose-zed mb-16">{{ . }}</div>
+      {{ end }}
+
+      <div class="rounded-xl border border-[#238636]/30 bg-[#0f2d1a] p-8 text-center">
+        <h2 class="text-xl font-bold text-[#e6edf3]">Tertarik menggunakan produk ini?</h2>
+        <p class="mt-2 text-[#8b949e]">Hubungi kami untuk demo atau informasi lebih lanjut.</p>
+        <a href="/contact" class="btn-primary mt-6">
+          Minta Demo
+        </a>
+      </div>
+
+    </div>
+  </div>
+</article>
+{{ end }}

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Zed Arifin",
+    "role": "Founder & Lead Engineer",
+    "avatar": "",
+    "bio": "10 tahun membangun produk digital dari skala startup hingga enterprise. Fokus pada arsitektur sistem dan engineering culture."
+  },
+  {
+    "name": "Aira Putri",
+    "role": "UI/UX & Frontend",
+    "avatar": "",
+    "bio": "Spesialis desain antarmuka yang berpikir dalam sistem. Percaya bahwa UX yang baik dimulai dari pemahaman bisnis yang mendalam."
+  },
+  {
+    "name": "Rizal Maulana",
+    "role": "Backend & DevOps",
+    "avatar": "",
+    "bio": "Infrastructure engineer dengan obsesi terhadap reliability dan observability. Jika bisa di-automate, akan di-automate."
+  }
+]

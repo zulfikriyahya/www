@@ -1,0 +1,29 @@
+{{ define "main" }}
+<article class="pt-32 section">
+  <div class="container-content">
+    <div class="max-w-3xl mx-auto">
+
+      <header class="mb-10">
+        {{ with .Params.category }}
+        <span class="badge-blue mb-4">{{ . }}</span>
+        {{ end }}
+        <h1 class="section-title mt-3">{{ .Title }}</h1>
+        {{ with .Description }}
+        <p class="section-subtitle max-w-2xl">{{ . }}</p>
+        {{ end }}
+        <div class="mt-6 flex items-center gap-4 text-xs font-mono text-[#6e7681]">
+          <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
+          {{ if .ReadingTime }}
+          <span>{{ .ReadingTime }} min read</span>
+          {{ end }}
+        </div>
+      </header>
+
+      <div class="prose-zed">
+        {{ .Content }}
+      </div>
+
+    </div>
+  </div>
+</article>
+{{ end }}

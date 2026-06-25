@@ -1,0 +1,42 @@
+{{ define "main" }}
+<div class="pt-32 section">
+  <div class="container-content">
+
+    <div class="max-w-2xl">
+      <span class="section-label">Layanan</span>
+      <h1 class="section-title">Yang Kami Kerjakan</h1>
+      <p class="section-subtitle">
+        Tiga area keahlian utama kami, dijalankan dengan standar engineering yang ketat.
+      </p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+      {{ range .Pages }}
+      <a href="{{ .Permalink }}" class="card-interactive group flex flex-col p-6">
+        {{ with .Params.icon }}
+        <span class="text-3xl mb-4">{{ . }}</span>
+        {{ end }}
+        {{ with .Params.badge }}
+        <span class="badge-{{ $.Params.badge_color | default " blue" }} self-start mb-3">{{ . }}</span>
+        {{ end }}
+        <h2 class="text-lg font-semibold text-[#e6edf3] group-hover:text-[#388bfd] transition-colors">
+          {{ .Title }}
+        </h2>
+        {{ with .Description }}
+        <p class="mt-2 text-sm text-[#8b949e] leading-relaxed flex-1">{{ . }}</p>
+        {{ end }}
+        <div
+          class="mt-6 flex items-center gap-1 pt-4 border-t border-[#21262d] text-sm text-[#8b949e] group-hover:text-[#388bfd] transition-colors">
+          Pelajari lebih lanjut
+          <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </div>
+      </a>
+      {{ end }}
+    </div>
+
+  </div>
+</div>
+{{ end }}

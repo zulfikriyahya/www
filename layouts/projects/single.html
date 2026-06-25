@@ -1,0 +1,89 @@
+{{ define "main" }}
+<article class="pt-32 section">
+  <div class="container-content">
+
+    <div class="max-w-4xl mx-auto">
+
+      <header class="mb-12">
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+          {{ with .Params.category }}
+          <span class="badge-blue">{{ . }}</span>
+          {{ end }}
+          {{ with .Params.client_name }}
+          <span class="text-xs font-mono text-[#6e7681]">{{ . }}</span>
+          {{ end }}
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-bold leading-tight tracking-tight text-[#e6edf3]">
+          {{ .Title }}
+        </h1>
+        {{ with .Description }}
+        <p class="mt-5 text-lg text-[#8b949e] leading-relaxed">{{ . }}</p>
+        {{ end }}
+      </header>
+
+      {{ with .Params.thumbnail }}
+      <div class="mb-16 overflow-hidden rounded-xl border border-[#30363d]">
+        <img src="{{ . }}" alt="{{ $.Title }}" class="w-full object-cover" />
+      </div>
+      {{ end }}
+
+      {{ if or .Params.problem .Params.solution .Params.result }}
+      <div class="mb-16 grid grid-cols-1 gap-6 sm:grid-cols-3">
+        {{ with .Params.problem }}
+        <div class="card p-6">
+          <p class="text-xs font-mono uppercase tracking-widest text-[#6e7681] mb-3">Problem</p>
+          <p class="text-sm text-[#8b949e] leading-relaxed">{{ . }}</p>
+        </div>
+        {{ end }}
+        {{ with .Params.solution }}
+        <div class="card p-6">
+          <p class="text-xs font-mono uppercase tracking-widest text-[#6e7681] mb-3">Solution</p>
+          <p class="text-sm text-[#8b949e] leading-relaxed">{{ . }}</p>
+        </div>
+        {{ end }}
+        {{ with .Params.result }}
+        <div class="card p-6 border-[#238636]">
+          <p class="text-xs font-mono uppercase tracking-widest text-[#238636] mb-3">Result</p>
+          <p class="text-sm text-[#8b949e] leading-relaxed">{{ . }}</p>
+        </div>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      {{ with .Content }}
+      <div class="prose-zed mb-16">{{ . }}</div>
+      {{ end }}
+
+      {{ with .Params.tech_stack }}
+      <div class="mb-16">
+        <p class="text-xs font-mono uppercase tracking-widest text-[#6e7681] mb-4">Tech Stack</p>
+        <div class="flex flex-wrap gap-2">
+          {{ range . }}
+          <span class="tag">{{ . }}</span>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+
+      <footer class="flex items-center justify-between border-t border-[#21262d] pt-10">
+        <a href="/projects" class="btn-outline text-sm">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+          </svg>
+          Semua Proyek
+        </a>
+        {{ with .Params.github_url }}
+        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm">
+          <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg>
+          Lihat di GitHub
+        </a>
+        {{ end }}
+      </footer>
+
+    </div>
+  </div>
+</article>
+{{ end }}

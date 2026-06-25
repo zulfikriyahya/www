@@ -1,0 +1,32 @@
+{{ define "main" }}
+<article class="pt-32 section">
+  <div class="container-content">
+    <div class="max-w-3xl mx-auto">
+
+      <header class="mb-12">
+        {{ with .Params.badge }}
+        <span class="badge-{{ $.Params.badge_color | default " blue" }} mb-4">{{ . }}</span>
+        {{ end }}
+        <h1 class="section-title">{{ .Title }}</h1>
+        {{ with .Description }}
+        <p class="section-subtitle text-lg">{{ . }}</p>
+        {{ end }}
+      </header>
+
+      {{ with .Content }}
+      <div class="prose-zed">{{ . }}</div>
+      {{ end }}
+
+      <div class="mt-16 rounded-xl border border-[#238636]/30 bg-[#0f2d1a] p-8">
+        <h2 class="text-xl font-bold text-[#e6edf3]">Tertarik dengan layanan ini?</h2>
+        <p class="mt-2 text-[#8b949e]">Konsultasikan kebutuhan Anda. Kami siap membantu dalam 1x24 jam.</p>
+        <div class="mt-6 flex flex-wrap gap-4">
+          <a href="/contact" class="btn-primary">Mulai Konsultasi</a>
+          <a href="/projects" class="btn-outline">Lihat Case Study</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</article>
+{{ end }}

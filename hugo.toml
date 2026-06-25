@@ -1,0 +1,60 @@
+baseURL = "https://zedlabs.id"
+defaultContentLanguage = "id"
+title = "ZEDLABS — Innovate Beyond Limits"
+theme = ""
+
+[languages]
+  [languages.id]
+    locale = "id"
+    weight = 1
+
+[params]
+  description = "IT Consulting, Web & Mobile Development, dan SaaS solutions."
+  tagline = "Innovate Beyond Limits"
+  email = "hello@zedlabs.id"
+  whatsapp = "+6281234567890"
+  github = "https://github.com/zedlabs"
+  linkedin = "https://linkedin.com/company/zedlabs"
+  pocketbase_url = "https://api.zedlabs.id"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[markup.highlight]
+  style = "github-dark"
+  lineNos = true
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[pagination]
+  pagerSize = 9
+
+[menu]
+  [[menu.main]]
+    name = "Layanan"
+    url = "/services"
+    weight = 1
+  [[menu.main]]
+    name = "Produk"
+    url = "/products"
+    weight = 2
+  [[menu.main]]
+    name = "Proyek"
+    url = "/projects"
+    weight = 3
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog"
+    weight = 4
+  [[menu.main]]
+    name = "Tentang"
+    url = "/about"
+    weight = 5
+  [[menu.main]]
+    name = "Kontak"
+    url = "/contact"
+    weight = 6

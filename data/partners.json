@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Go"
+  },
+  {
+    "name": "Hugo"
+  },
+  {
+    "name": "PocketBase"
+  },
+  {
+    "name": "React"
+  },
+  {
+    "name": "Next.js"
+  },
+  {
+    "name": "Flutter"
+  },
+  {
+    "name": "Tailwind CSS"
+  },
+  {
+    "name": "PostgreSQL"
+  },
+  {
+    "name": "SQLite"
+  },
+  {
+    "name": "Docker"
+  },
+  {
+    "name": "Cloudflare"
+  },
+  {
+    "name": "Caddy"
+  }
+]
